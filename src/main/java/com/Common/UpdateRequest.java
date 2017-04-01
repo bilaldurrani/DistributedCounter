@@ -12,6 +12,8 @@ public class UpdateRequest {
 	private Counter counter;
 
 	public UpdateRequest() {
+		serverInfo = new ServerInfo();
+		counter = new Counter();
 	}
  
 	public UpdateRequest(ServerInfo serverInfo, Counter counter) {

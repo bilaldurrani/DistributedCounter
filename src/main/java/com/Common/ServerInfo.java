@@ -31,8 +31,12 @@ public class ServerInfo {
 	
 	@Override
 	public boolean equals(Object obj) {
-		// TODO Auto-generated method stub.
-		return ((ServerInfo)obj).getServerIpAndPort().equals(serverIpAndPort);
+		if(this.getClass().isInstance(obj)) {
+			return ((ServerInfo)obj).getServerIpAndPort().equals(serverIpAndPort);
+		}
+		
+		// Otherwise always return false.
+		return false;
 	}
 	
 	@Override

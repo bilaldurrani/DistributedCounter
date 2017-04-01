@@ -85,12 +85,5 @@ public class DistributionController {
         	// TODO: Check whether this is correct or not.
         	response.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
         }
-    }
-    
-    @RequestMapping(value = "/test")
-    ServerInfo test() {
-    	return new ServerInfo("TEST");
-    }
-    
-    
+    }    
 }

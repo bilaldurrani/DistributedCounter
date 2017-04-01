@@ -1,8 +1,6 @@
 package com.DistributedCounter;
 
 import java.net.UnknownHostException;
-import java.util.Arrays;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -29,17 +27,7 @@ public class DistributedCounterApplication {
 	
 	public static void main(String[] args) throws Exception {
 		ApplicationContext ctx = SpringApplication.run(DistributedCounterApplication.class, args);
-		
-		System.out.println("Let's inspect the beans provided by Spring Boot:");
-
-        String[] beanNames = ctx.getBeanDefinitionNames();
-        Arrays.sort(beanNames);
-        for (String beanName : beanNames) {
-            System.out.println(beanName);
-        }
-        
-        System.out.println(ctx.getEnvironment());
-        
+		        
         if(args.length > 1)
         {
         	// Not checking that args[1] really is an IP. In worst case the Registration logic will do a throw and exception. 
@@ -49,11 +37,12 @@ public class DistributedCounterApplication {
 	
 	/**
 	 * Registers the current node with a remote node.
+	 * TODO: This should be done in a better way (Running when application started event is fired).
 	 * @param ctx			ApplicationContext from Spring. Needed to resolve IDistributionManager.
 	 * @param node			The remote node being registered with.
 	 * @throws Exception	Throws an exception if the registration is not successful.
 	 */
-	private static void RegisterWithNode(ApplicationContext ctx, String node) throws Exception
+	public static void RegisterWithNode(ApplicationContext ctx, String node) throws Exception
 	{
 		IDistributionManager distributionManager = ctx.getBean(IDistributionManager.class);
 		

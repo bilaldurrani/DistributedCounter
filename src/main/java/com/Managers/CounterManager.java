@@ -10,7 +10,7 @@ public class CounterManager implements ICountManager {
 
 	private Counter counter;
 
-	CounterManager()
+	public CounterManager()
 	{
 		counter = new Counter();
 	}

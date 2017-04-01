@@ -69,4 +69,13 @@ public class CounterTests {
 		
 		assertThat(oldCounter.UpdateDecrementCounter(1)).isFalse();
 	}
+	
+	@Test
+	public void CounterToString()
+	{
+		Counter oldCounter = new Counter(5,10);
+		String expected = "IncrementCounter: 5 DecrementCount: 10";
+		
+		assertThat(oldCounter.toString()).isEqualTo(expected);
+	}
 }

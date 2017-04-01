@@ -57,7 +57,7 @@ public class DistributionManager implements IDistributionManager {
 		
 		nodesInfo.getNodesInfo().forEach((node, counter) -> {
 			if(node.equals(thisServerInfo)) {
-				// If the node we are registering with has a node which is the current server itself, then it's safe to assumer the current node is restarting.
+				// If the node we are registering with has a node which is the current server itself, then it's safe to assume the current node is restarting.
 				// As only a single IP:PORT can exist, we take the value from the remote node and update the local counter to that value.
 				
 				logger.info("Using Remote Node's info for '{}'. Updating Counter to {}" , thisServerInfo, counter);

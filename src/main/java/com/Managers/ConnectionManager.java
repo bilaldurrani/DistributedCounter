@@ -20,7 +20,10 @@ public class ConnectionManager implements IConnectionManager{
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
-	IRouteProvider routeProvider;
+	private IRouteProvider routeProvider;
+	
+	@Autowired
+	private RestTemplate restTemplate;
 	
 	/**
 	 * 	{@inheritDoc}
@@ -28,7 +31,7 @@ public class ConnectionManager implements IConnectionManager{
 	@Override
 	public ServerInfo GetNodeConnectionInfo(ServerInfo node)
 	{
-		RestTemplate restTemplate = new RestTemplate();
+		//RestTemplate restTemplate = new RestTemplate();
 		String url = routeProvider.GetNodeConnectionInfoUrl(node);
 
 		logger.info("Getting connection info using URL: {}", url);
@@ -44,7 +47,7 @@ public class ConnectionManager implements IConnectionManager{
 	public void SyncWithNode(ServerInfo node, UpdateRequest request) {
 	
 		try {
-			RestTemplate restTemplate = new RestTemplate();
+			//RestTemplate restTemplate = new RestTemplate();
 			String url = routeProvider.GetUpdateUrl(node);
 			
 			logger.info("Sending update/sync request using URL: {}", url);
@@ -55,10 +58,6 @@ public class ConnectionManager implements IConnectionManager{
 		{
 			logger.error("Unable to update {}", node, e);
 		}
-		catch(Exception e)
-		{
-			logger.error("Unable to update {}. Unknown Exception.", node, e);
-		}
 	}
 
 	/**
@@ -67,7 +66,7 @@ public class ConnectionManager implements IConnectionManager{
 	@Override
 	public NodesInfoResponse GetNodesInfo(ServerInfo node) {
 		try {
-			RestTemplate restTemplate = new RestTemplate();
+			//RestTemplate restTemplate = new RestTemplate();
 			String url = routeProvider.GetNodesInfoUrl(node);
 			
 			logger.info("Getting NodesInfo using URL: {}", url);
@@ -78,10 +77,6 @@ public class ConnectionManager implements IConnectionManager{
 		catch(RestClientException e)
 		{
 			logger.error("Unable to get node info from {}", node, e);
-		}
-		catch(Exception e)
-		{
-			logger.error("Unable to get node info from {}. Unknown Exception.", node, e);
 		}
 		
 		return null;
