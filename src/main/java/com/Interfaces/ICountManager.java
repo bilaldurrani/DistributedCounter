@@ -8,30 +8,30 @@ public interface ICountManager {
 	 * Increment the local increment counter.
 	 * @return		Current increment counter value.
 	 */
-	public int Increment();
+	public int increment();
 	
 	
 	/**
 	 * Increment the local decrement counter.
 	 * @return		Current decrement counter value.
 	 */
-	public int Decrement();
+	public int decrement();
 	
 	/**
 	 * Gets the current local count.
 	 * @return		The current count.
 	 */
-	public int GetCount();
+	public int getCount();
 	
 	/**
 	 * Gets the counter object.
 	 * @return		The counter object.
 	 */
-	public Counter GetCounter();
+	public Counter getCounter();
 	
 	/**
 	 * Sets the counter object.
 	 * @return		The counter object to set to.
 	 */
-	public void SetCounter(Counter counter);
+	public void setCounter(Counter counter);
 }

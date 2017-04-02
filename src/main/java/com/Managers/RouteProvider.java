@@ -12,30 +12,30 @@ public class RouteProvider implements IRouteProvider {
 	 * 	{@inheritDoc}
 	 */
 	@Override
-	public String GetUpdateUrl(ServerInfo node)
+	public String getUpdateUrl(ServerInfo node)
 	{
-		return AppendUrl(node, "update");
+		return this.appendUrl(node, "update");
 	}
 	
 	/**
 	 * 	{@inheritDoc}
 	 */
 	@Override
-	public String GetNodesInfoUrl(ServerInfo node)
+	public String getNodesInfoUrl(ServerInfo node)
 	{
-		return AppendUrl(node, "nodesinfo");
+		return this.appendUrl(node, "nodesinfo");
 	}
 	
 	/**
 	 * 	{@inheritDoc}
 	 */
 	@Override
-	public String GetNodeConnectionInfoUrl(ServerInfo node)
+	public String getNodeConnectionInfoUrl(ServerInfo node)
 	{
-		return AppendUrl(node, "nodeconnectioninfo");
+		return this.appendUrl(node, "nodeconnectioninfo");
 	}
 	
-	private String AppendUrl(ServerInfo node, String urlToApend)
+	private String appendUrl(ServerInfo node, String urlToApend)
 	{
 		return String.format("%s/%s", node.getServerIpAndPort(), urlToApend);
 	}

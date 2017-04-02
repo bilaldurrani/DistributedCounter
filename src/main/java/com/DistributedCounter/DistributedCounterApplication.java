@@ -54,7 +54,7 @@ public class DistributedCounterApplication {
 			logger.info("Received arg to register with node: {}", node);
 
 			ServerInfo serverInfo = new ServerInfo(node);
-			distributionManager.Register(serverInfo);
+			distributionManager.register(serverInfo);
 		} catch (UnknownHostException e) {
 			logger.error("Unable to Register with node {}. Please enter an up and running node.", node);
 			throw e;

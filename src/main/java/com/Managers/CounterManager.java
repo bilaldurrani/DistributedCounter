@@ -19,7 +19,7 @@ public class CounterManager implements ICountManager {
 	 * 	{@inheritDoc}
 	 */
 	@Override
-	public synchronized int Increment()
+	public synchronized int increment()
 	{
 		int count = counter.getIncrementCounter();
 		count++;
@@ -33,7 +33,7 @@ public class CounterManager implements ICountManager {
 	 * 	{@inheritDoc}
 	 */
 	@Override
-	public synchronized int Decrement()
+	public synchronized int decrement()
 	{
 		int count = counter.getDecrementCounter();
 		count++;
@@ -47,7 +47,7 @@ public class CounterManager implements ICountManager {
 	 * 	{@inheritDoc}
 	 */
 	@Override
-	public int GetCount()
+	public int getCount()
 	{
 		int incrementCounter = counter.getIncrementCounter();
 		int decrementCounter = counter.getDecrementCounter();
@@ -59,7 +59,7 @@ public class CounterManager implements ICountManager {
 	 * 	{@inheritDoc}
 	 */
 	@Override
-	public Counter GetCounter()
+	public Counter getCounter()
 	{
 		return counter;
 	}
@@ -68,7 +68,7 @@ public class CounterManager implements ICountManager {
 	 * 	{@inheritDoc}
 	 */
 	@Override
-	public void SetCounter(Counter counter)
+	public void setCounter(Counter counter)
 	{
 		this.counter = counter;
 	}

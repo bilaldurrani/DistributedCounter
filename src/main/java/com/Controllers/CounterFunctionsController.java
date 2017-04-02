@@ -34,10 +34,10 @@ public class CounterFunctionsController {
 	 */
     @PostMapping("/increment")
     void Increment() throws UnknownHostException {
-        int c = countManager.Increment();
+        int c = countManager.increment();
         logger.info("Incrementing counter. New value: {}", c);
         
-        distributionManager.PublishToAllNodes(countManager.GetCounter());
+        distributionManager.publishToAllNodes(countManager.getCounter());
     }
 
 	/**
@@ -46,10 +46,10 @@ public class CounterFunctionsController {
 	 */
     @PostMapping("/decrement")
     void Decrement() throws UnknownHostException {
-    	int c = countManager.Decrement();
+    	int c = countManager.decrement();
     	logger.info("Decrementing counter. New value: {}", c);
     	
-    	distributionManager.PublishToAllNodes(countManager.GetCounter());
+    	distributionManager.publishToAllNodes(countManager.getCounter());
     }
     
     /**
@@ -62,7 +62,7 @@ public class CounterFunctionsController {
     {
     	logger.info("Getting Count");
     	
-    	Collection<Counter> counters = nodesManager.GetAllCounters();
+    	Collection<Counter> counters = nodesManager.getAllCounters();
     	
     	Optional<Integer> allIncrements = counters.stream().map(c -> c.getIncrementCounter()).reduce((i,k) -> i+k);
     	Optional<Integer> allDecrements = counters.stream().map(c -> c.getDecrementCounter()).reduce((i,k) -> i+k);
@@ -74,6 +74,6 @@ public class CounterFunctionsController {
     			(allDecrements.isPresent() ? allDecrements.get() : 0);
     	
     	// TODO: Possibly the global count can be a Big Integer to reduce the chances of overflow.
-    	return countManager.GetCount() + globalCount;
+    	return countManager.getCount() + globalCount;
     }
 }

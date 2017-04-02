@@ -22,8 +22,8 @@ public class RouteProviderTests {
 		ServerInfo serverInfo = new ServerInfo(uri);
 		IRouteProvider provider = new RouteProvider();
 		
-		assertThat(provider.GetNodeConnectionInfoUrl(serverInfo)).isEqualTo(String.format("%s/%s", "http://1.1.1.1:8080", "nodeconnectioninfo"));
-		assertThat(provider.GetNodesInfoUrl(serverInfo)).isEqualTo(String.format("%s/%s", "http://1.1.1.1:8080", "nodesinfo"));
-		assertThat(provider.GetUpdateUrl(serverInfo)).isEqualTo(String.format("%s/%s", "http://1.1.1.1:8080", "update"));
+		assertThat(provider.getNodeConnectionInfoUrl(serverInfo)).isEqualTo(String.format("%s/%s", "http://1.1.1.1:8080", "nodeconnectioninfo"));
+		assertThat(provider.getNodesInfoUrl(serverInfo)).isEqualTo(String.format("%s/%s", "http://1.1.1.1:8080", "nodesinfo"));
+		assertThat(provider.getUpdateUrl(serverInfo)).isEqualTo(String.format("%s/%s", "http://1.1.1.1:8080", "update"));
 	}
 }

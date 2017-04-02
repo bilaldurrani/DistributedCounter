@@ -51,8 +51,8 @@ public class DistributionControllerTests {
 		Map<ServerInfo, Counter> map = new HashMap<ServerInfo, Counter>();
 		map.put(info, counter);
 		
-		Mockito.when(this.nodesManager.GetNodesToCounterMapping()).thenReturn(map);
-		Mockito.when(this.countManager.GetCounter()).thenReturn(counter);
+		Mockito.when(this.nodesManager.getNodesToCounterMapping()).thenReturn(map);
+		Mockito.when(this.countManager.getCounter()).thenReturn(counter);
 		
 		this.mockMvc.perform(get("/nodesinfo"))
 		.andExpect(status().isOk())
@@ -63,7 +63,7 @@ public class DistributionControllerTests {
     public void GetNodeConnectionInfo() throws Exception {
 		ServerInfo info = new ServerInfo("TEST", "8080");
 		
-		Mockito.when(this.serverInfoProvider.GetServerInfo()).thenReturn(info);
+		Mockito.when(this.serverInfoProvider.getServerInfo()).thenReturn(info);
 		
 		this.mockMvc.perform(get("/nodeconnectioninfo"))
 		.andExpect(status().isOk())
@@ -72,7 +72,7 @@ public class DistributionControllerTests {
 	
 	@Test
     public void GetNodeConnectionInfo_ThrowException() throws Exception {
-		Mockito.when(this.serverInfoProvider.GetServerInfo()).thenThrow(new UnknownHostException());
+		Mockito.when(this.serverInfoProvider.getServerInfo()).thenThrow(new UnknownHostException());
 		
 		this.mockMvc.perform(get("/nodeconnectioninfo"))
 		.andExpect(status().isNoContent());
@@ -83,7 +83,7 @@ public class DistributionControllerTests {
 		
 		String request = "{  \"serverInfo\": {    \"serverIpAndPort\": \"TEST\"  },  \"counter\": {    \"incrementCounter\": 0,    \"decrementCounter\": 0  }}";
 		
-		Mockito.when(this.nodesManager.UpdateCounter(any(), any())).thenReturn(true);
+		Mockito.when(this.nodesManager.updateCounter(any(), any())).thenReturn(true);
 		
 		this.mockMvc.perform(put("/update")
 				.content(request)
@@ -97,7 +97,7 @@ public class DistributionControllerTests {
 		
 		String request = "{  \"serverInfo\": {    \"serverIpAndPort\": \"TEST\"  },  \"counter\": {    \"incrementCounter\": 0,    \"decrementCounter\": 0  }}";
 		
-		Mockito.when(this.nodesManager.UpdateCounter(any(), any())).thenReturn(false);
+		Mockito.when(this.nodesManager.updateCounter(any(), any())).thenReturn(false);
 		
 		this.mockMvc.perform(put("/update")
 				.content(request)

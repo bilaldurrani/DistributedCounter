@@ -12,13 +12,13 @@ public interface INodesManager {
 	 * Gets all the nodes.
 	 * @return	List of all the nodes
 	 */
-	Collection<ServerInfo> GetAllNodes();
+	Collection<ServerInfo> getAllNodes();
 
 	/**
 	 * Get all the remote counters that are locally stored. (Doesn't return own counter)
 	 * @return	List of all the counters.
 	 */
-	Collection<Counter> GetAllCounters();
+	Collection<Counter> getAllCounters();
 
 	/**
 	 * Updates a remote counters locally. 
@@ -26,11 +26,11 @@ public interface INodesManager {
 	 * @param counter	The new counter value.
 	 * @return			If the counter is not newer then it won't update the counter and return false.
 	 */
-	boolean UpdateCounter(ServerInfo nodeInfo, Counter counter);
+	boolean updateCounter(ServerInfo nodeInfo, Counter counter);
 
 	/**
 	 * Get the Node to Counter mapping. The String is the node's IP.
 	 * @return			Map of Node to Counter mapping.
 	 */
-	Map<ServerInfo, Counter> GetNodesToCounterMapping();
+	Map<ServerInfo, Counter> getNodesToCounterMapping();
 }

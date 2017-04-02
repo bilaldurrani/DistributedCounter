@@ -19,8 +19,8 @@ public class CounterManagerTests {
 	{
 		CounterManager manager = new CounterManager();
 		
-		manager.Increment();
-		Counter counter = manager.GetCounter();
+		manager.increment();
+		Counter counter = manager.getCounter();
 		
 		assertThat(counter.getIncrementCounter()).isEqualTo(1);
 		assertThat(counter.getDecrementCounter()).isEqualTo(0);
@@ -31,8 +31,8 @@ public class CounterManagerTests {
 	{
 		CounterManager manager = new CounterManager();
 		
-		manager.Decrement();
-		Counter counter = manager.GetCounter();
+		manager.decrement();
+		Counter counter = manager.getCounter();
 		
 		assertThat(counter.getIncrementCounter()).isEqualTo(0);
 		assertThat(counter.getDecrementCounter()).isEqualTo(1);
@@ -43,13 +43,13 @@ public class CounterManagerTests {
 	{
 		CounterManager manager = new CounterManager();
 		
-		manager.Increment();
-		manager.Increment();
-		manager.Increment();
+		manager.increment();
+		manager.increment();
+		manager.increment();
 		
-		manager.Decrement();
+		manager.decrement();
 		
-		assertThat(manager.GetCount()).isEqualTo(2);
+		assertThat(manager.getCount()).isEqualTo(2);
 	}
 	
 	@Test
@@ -57,9 +57,9 @@ public class CounterManagerTests {
 	{
 		CounterManager manager = new CounterManager();
 
-		manager.SetCounter(new Counter(5, 10));
+		manager.setCounter(new Counter(5, 10));
 		
-		Counter counter = manager.GetCounter();
+		Counter counter = manager.getCounter();
 		
 		assertThat(counter.getIncrementCounter()).isEqualTo(5);
 		assertThat(counter.getDecrementCounter()).isEqualTo(10);

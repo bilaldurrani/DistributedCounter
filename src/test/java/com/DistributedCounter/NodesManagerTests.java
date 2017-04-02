@@ -25,16 +25,16 @@ public class NodesManagerTests {
 		Counter counter = new Counter(5, 10);
 		ServerInfo info = new ServerInfo("TEST");
 		
-		assertThat(nodesManager.UpdateCounter(info, counter)).isTrue();
+		assertThat(nodesManager.updateCounter(info, counter)).isTrue();
 		counter = new Counter(50, 10);
-		assertThat(nodesManager.UpdateCounter(info, counter)).isTrue();
+		assertThat(nodesManager.updateCounter(info, counter)).isTrue();
 		
-		Collection<Counter> counters = nodesManager.GetAllCounters();
+		Collection<Counter> counters = nodesManager.getAllCounters();
 		
 		Counter counterCheck = counters.iterator().next();
 		assertThat(counters.size()).isEqualTo(1);
 		assertThat(counterCheck.getIncrementCounter()).isEqualTo(50);
-		assertThat(nodesManager.GetNodesToCounterMapping().keySet()).isEqualTo(nodesManager.GetAllNodes());
+		assertThat(nodesManager.getNodesToCounterMapping().keySet()).isEqualTo(nodesManager.getAllNodes());
 	}
 	
 	@Test
@@ -44,16 +44,16 @@ public class NodesManagerTests {
 		Counter counter = new Counter(5, 10);
 		ServerInfo info = new ServerInfo("TEST");
 		
-		assertThat(nodesManager.UpdateCounter(info, counter)).isTrue();
+		assertThat(nodesManager.updateCounter(info, counter)).isTrue();
 		counter = new Counter(1, 10);
-		assertThat(nodesManager.UpdateCounter(info, counter)).isFalse();
+		assertThat(nodesManager.updateCounter(info, counter)).isFalse();
 		
-		Collection<Counter> counters = nodesManager.GetAllCounters();
+		Collection<Counter> counters = nodesManager.getAllCounters();
 		
 		Counter counterCheck = counters.iterator().next();
 		assertThat(counters.size()).isEqualTo(1);
 		assertThat(counterCheck.getIncrementCounter()).isEqualTo(5);
-		assertThat(nodesManager.GetNodesToCounterMapping().keySet()).isEqualTo(nodesManager.GetAllNodes());
+		assertThat(nodesManager.getNodesToCounterMapping().keySet()).isEqualTo(nodesManager.getAllNodes());
 	}
 	
 }

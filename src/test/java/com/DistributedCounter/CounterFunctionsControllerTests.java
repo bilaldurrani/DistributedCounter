@@ -51,16 +51,16 @@ public class CounterFunctionsControllerTests {
     public void Increment() throws Exception {
 		this.mockMvc.perform(post("/increment")).andExpect(status().isOk());
 		
-		Mockito.verify(this.countManager).Increment();
-		Mockito.verify(this.distributionManager).PublishToAllNodes(any());
+		Mockito.verify(this.countManager).increment();
+		Mockito.verify(this.distributionManager).publishToAllNodes(any());
     }
 	
 	@Test
     public void Decrement() throws Exception {
 		this.mockMvc.perform(post("/decrement")).andExpect(status().isOk());
 		
-		Mockito.verify(this.countManager).Decrement();
-		Mockito.verify(this.distributionManager).PublishToAllNodes(any());
+		Mockito.verify(this.countManager).decrement();
+		Mockito.verify(this.distributionManager).publishToAllNodes(any());
     }
 	
 	@Test
@@ -75,8 +75,8 @@ public class CounterFunctionsControllerTests {
 		int ownCount = 50;
 		int expectedCount = ownCount + (10 + 20 + 30 + 40) - (1 + 2 + 3 + 4);
 		
-		Mockito.when(this.nodesManager.GetAllCounters()).thenReturn(counters);
-		Mockito.when(this.countManager.GetCount()).thenReturn(ownCount);
+		Mockito.when(this.nodesManager.getAllCounters()).thenReturn(counters);
+		Mockito.when(this.countManager.getCount()).thenReturn(ownCount);
 		
 		this.mockMvc.perform(get("/counter"))
 			.andExpect(status().isOk())

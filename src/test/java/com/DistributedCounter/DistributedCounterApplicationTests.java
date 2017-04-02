@@ -41,13 +41,13 @@ public class DistributedCounterApplicationTests {
 		
 		DistributedCounterApplication.RegisterWithNode(ctx, "TEST");
 		
-		Mockito.verify(manager).Register(new ServerInfo("TEST"));
+		Mockito.verify(manager).register(new ServerInfo("TEST"));
 	}
 	
 	@Test(expected = UnknownHostException.class)
 	public void RegisterationException() throws Exception {
 		Mockito.when(ctx.getBean(IDistributionManager.class)).thenReturn(manager);
-		Mockito.doThrow(UnknownHostException.class).when(this.manager).Register(any());
+		Mockito.doThrow(UnknownHostException.class).when(this.manager).register(any());
 		
 		DistributedCounterApplication.RegisterWithNode(ctx, "TEST");
 	}

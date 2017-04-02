@@ -29,9 +29,9 @@ public class ConnectionManager implements IConnectionManager{
 	 * 	{@inheritDoc}
 	 */
 	@Override
-	public ServerInfo GetNodeConnectionInfo(ServerInfo node)
+	public ServerInfo getNodeConnectionInfo(ServerInfo node)
 	{
-		String url = routeProvider.GetNodeConnectionInfoUrl(node);
+		String url = routeProvider.getNodeConnectionInfoUrl(node);
 
 		logger.info("Getting connection info using URL: {}", url);
 		
@@ -43,10 +43,10 @@ public class ConnectionManager implements IConnectionManager{
 	 * 	{@inheritDoc}
 	 */
 	@Override
-	public void SyncWithNode(ServerInfo node, UpdateRequest request) {
+	public void syncWithNode(ServerInfo node, UpdateRequest request) {
 	
 		try {
-			String url = routeProvider.GetUpdateUrl(node);
+			String url = routeProvider.getUpdateUrl(node);
 			
 			logger.info("Sending update/sync request using URL: {}", url);
 			
@@ -62,9 +62,9 @@ public class ConnectionManager implements IConnectionManager{
 	 * 	{@inheritDoc}
 	 */
 	@Override
-	public NodesInfoResponse GetNodesInfo(ServerInfo node) {
+	public NodesInfoResponse getNodesInfo(ServerInfo node) {
 		try {
-			String url = routeProvider.GetNodesInfoUrl(node);
+			String url = routeProvider.getNodesInfoUrl(node);
 			
 			logger.info("Getting NodesInfo using URL: {}", url);
 			

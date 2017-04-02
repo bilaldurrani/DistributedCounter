@@ -32,7 +32,7 @@ public class ServerInfoProviderTests {
 		PowerMockito.when(inetAddress.getHostAddress()).thenReturn(mockIp);
 		
 		IServerInfoProvider provider = new ServerInfoProvider();
-		ServerInfo serverInfo = provider.GetServerInfo();
+		ServerInfo serverInfo = provider.getServerInfo();
 		
 		ServerInfo expected = new ServerInfo(mockIp, null);
 		

@@ -42,8 +42,8 @@ public class DistributionController {
 	NodesInfoResponse GetNodesInfo()
 	{
 		NodesInfoResponse response = new NodesInfoResponse();
-		response.setNodesInfo(nodesManager.GetNodesToCounterMapping());
-		response.setOwnCounter(countManager.GetCounter());
+		response.setNodesInfo(nodesManager.getNodesToCounterMapping());
+		response.setOwnCounter(countManager.getCounter());
 		
 		return response;
 	}
@@ -57,7 +57,7 @@ public class DistributionController {
 	@RequestMapping(value = "/nodeconnectioninfo", method = RequestMethod.GET)
 	ResponseEntity<ServerInfo> GetNodeConnectionInfo(HttpServletResponse response) {
 		try {
-			ServerInfo info = serverInfoProvider.GetServerInfo();
+			ServerInfo info = serverInfoProvider.getServerInfo();
 			logger.info("Current server info: {}", info);
 			
 			return ResponseEntity.ok(info);
@@ -76,7 +76,7 @@ public class DistributionController {
     @RequestMapping(value = "/update", method = RequestMethod.PUT)
     void Update(@RequestBody UpdateRequest request, HttpServletResponse response) {
     	logger.info("Received update Request: %s", request);
-        boolean isUpdated = nodesManager.UpdateCounter(request.getServerInfo(), request.getCounter());
+        boolean isUpdated = nodesManager.updateCounter(request.getServerInfo(), request.getCounter());
         
         if(isUpdated) {
         	response.setStatus(HttpServletResponse.SC_CREATED);

@@ -57,19 +57,19 @@ public class DistributionManagerTests {
 		Collection<ServerInfo> nodes = new ArrayList<ServerInfo>();
         nodes.add(remoteNode);
         
-		Mockito.when(this.ServerInfoProvider.GetServerInfo()).thenReturn(info);       
-        Mockito.when(this.nodesManager.GetAllNodes()).thenReturn(nodes);
+		Mockito.when(this.ServerInfoProvider.getServerInfo()).thenReturn(info);       
+        Mockito.when(this.nodesManager.getAllNodes()).thenReturn(nodes);
 		
 		Counter counter = new Counter(5, 10);
 		
 		remoteNode.setServerIpAndPort("1");
 		
-		distributionManager.PublishToAllNodes(counter);
+		distributionManager.publishToAllNodes(counter);
 		
 		ArgumentCaptor<ServerInfo> savedRemoteNode = ArgumentCaptor.forClass(ServerInfo.class);
 		ArgumentCaptor<UpdateRequest> savedUpdatereq = ArgumentCaptor.forClass(UpdateRequest.class);
 		
-		Mockito.verify(this.connectionManager).SyncWithNode(
+		Mockito.verify(this.connectionManager).syncWithNode(
 				savedRemoteNode.capture(),
 				savedUpdatereq.capture());
 		
@@ -93,15 +93,15 @@ public class DistributionManagerTests {
         nodeInfoResponse.setNodesInfo(mockNodesInfo);
         nodeInfoResponse.setOwnCounter(counter);
         
-        Mockito.when(this.connectionManager.GetNodeConnectionInfo(remoteNodeInfo)).thenReturn(remoteNodeInfo);
-        Mockito.when(this.ServerInfoProvider.GetServerInfo()).thenReturn(currNodeInfo); 
-		Mockito.when(this.connectionManager.GetNodesInfo(remoteNodeInfo)).thenReturn(nodeInfoResponse);     
+        Mockito.when(this.connectionManager.getNodeConnectionInfo(remoteNodeInfo)).thenReturn(remoteNodeInfo);
+        Mockito.when(this.ServerInfoProvider.getServerInfo()).thenReturn(currNodeInfo); 
+		Mockito.when(this.connectionManager.getNodesInfo(remoteNodeInfo)).thenReturn(nodeInfoResponse);     
 		
 		// Making call.
-		distributionManager.Register(remoteNodeInfo);
+		distributionManager.register(remoteNodeInfo);
 		
 		//Verifications.
-		Mockito.verify(this.nodesManager, Mockito.atLeast(2)).UpdateCounter(any(), any());
+		Mockito.verify(this.nodesManager, Mockito.atLeast(2)).updateCounter(any(), any());
 	}
 	
 	@Test
@@ -119,15 +119,15 @@ public class DistributionManagerTests {
         nodeInfoResponse.setNodesInfo(mockNodesInfo);
         nodeInfoResponse.setOwnCounter(counter);
         
-        Mockito.when(this.connectionManager.GetNodeConnectionInfo(remoteNodeInfo)).thenReturn(remoteNodeInfo);
-        Mockito.when(this.ServerInfoProvider.GetServerInfo()).thenReturn(currNodeInfo); 
-		Mockito.when(this.connectionManager.GetNodesInfo(remoteNodeInfo)).thenReturn(nodeInfoResponse);     
+        Mockito.when(this.connectionManager.getNodeConnectionInfo(remoteNodeInfo)).thenReturn(remoteNodeInfo);
+        Mockito.when(this.ServerInfoProvider.getServerInfo()).thenReturn(currNodeInfo); 
+		Mockito.when(this.connectionManager.getNodesInfo(remoteNodeInfo)).thenReturn(nodeInfoResponse);     
 		
 		// Making call.
-		distributionManager.Register(remoteNodeInfo);
+		distributionManager.register(remoteNodeInfo);
 		
 		//Verifications.
-		Mockito.verify(this.nodesManager).UpdateCounter(any(), any());
-		Mockito.verify(this.countManager).SetCounter(any());
+		Mockito.verify(this.nodesManager).updateCounter(any(), any());
+		Mockito.verify(this.countManager).setCounter(any());
 	}
 }

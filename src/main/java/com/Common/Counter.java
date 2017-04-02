@@ -30,7 +30,7 @@ public class Counter {
 		this.decrementCounter = decrementCounter;
 	}
 	
-	public boolean UpdateDecrementCounter(int decrementCounter) {
+	public boolean updateDecrementCounter(int decrementCounter) {
 		if(this.getDecrementCounter() < decrementCounter) {
 			this.setDecrementCounter(decrementCounter);
 			return true;
@@ -39,7 +39,7 @@ public class Counter {
 		return false;
 	}
 	
-	public boolean UpdateIncrementCounter(int incrementCounter) {
+	public boolean updateIncrementCounter(int incrementCounter) {
 		if(this.getIncrementCounter() < incrementCounter) {
 			this.setIncrementCounter(incrementCounter);
 			return true;

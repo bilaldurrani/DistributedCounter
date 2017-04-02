@@ -18,7 +18,7 @@ public class ServerInfoProvider implements IServerInfoProvider{
 	 * 	{@inheritDoc}
 	 */
 	@Override
-	public ServerInfo GetServerInfo() throws UnknownHostException
+	public ServerInfo getServerInfo() throws UnknownHostException
 	{
 		String ip = InetAddress.getLocalHost().getHostAddress();
 		return new ServerInfo(ip, port);

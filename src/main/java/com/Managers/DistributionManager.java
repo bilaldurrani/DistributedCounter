@@ -34,15 +34,15 @@ public class DistributionManager implements IDistributionManager {
 	 * 	{@inheritDoc}
 	 */
 	@Override
-	public void PublishToAllNodes(Counter counter) throws UnknownHostException {
+	public void publishToAllNodes(Counter counter) throws UnknownHostException {
 		
-		Collection<ServerInfo> nodes = nodesManager.GetAllNodes();
-		ServerInfo serverInfo = ServerInfoProvider.GetServerInfo();
+		Collection<ServerInfo> nodes = nodesManager.getAllNodes();
+		ServerInfo serverInfo = ServerInfoProvider.getServerInfo();
 
 		for(ServerInfo node: nodes)
 		{
 			UpdateRequest request = new UpdateRequest(serverInfo, counter);
-			connectionManager.SyncWithNode(node, request);
+			connectionManager.syncWithNode(node, request);
 		}
 	}
 	
@@ -50,11 +50,11 @@ public class DistributionManager implements IDistributionManager {
 	 * 	{@inheritDoc}
 	 */
 	@Override
-	public void Register(ServerInfo nodeToRegisterWith) throws UnknownHostException	{
+	public void register(ServerInfo nodeToRegisterWith) throws UnknownHostException	{
 		
-		ServerInfo nodeAddress = connectionManager.GetNodeConnectionInfo(nodeToRegisterWith);
-		ServerInfo thisServerInfo = ServerInfoProvider.GetServerInfo();
-		NodesInfoResponse nodesInfo = connectionManager.GetNodesInfo(nodeAddress);
+		ServerInfo nodeAddress = connectionManager.getNodeConnectionInfo(nodeToRegisterWith);
+		ServerInfo thisServerInfo = ServerInfoProvider.getServerInfo();
+		NodesInfoResponse nodesInfo = connectionManager.getNodesInfo(nodeAddress);
 		
 		nodesInfo.getNodesInfo().forEach((node, counter) -> {
 			if(node.equals(thisServerInfo)) {
@@ -62,19 +62,19 @@ public class DistributionManager implements IDistributionManager {
 				// As only a single IP:PORT can exist, we take the value from the remote node and update the local counter to that value.
 				
 				logger.info("Using Remote Node's info for '{}'. Updating Counter to {}" , thisServerInfo, counter);
-				countManager.SetCounter(counter);
+				countManager.setCounter(counter);
 			}
 			else {
 				logger.info("Updating local nodes info using: Node: {}, Counter: {}", node, counter.toString());
-				nodesManager.UpdateCounter(node, counter);
+				nodesManager.updateCounter(node, counter);
 			}
 		});
 			
 		// Adding the remote node's own counter to the list of counters it has reported. 
 		// Better design Might be to have the node's own counter be part of the list of counters. 
-		nodesManager.UpdateCounter(nodeAddress, nodesInfo.getOwnCounter());
+		nodesManager.updateCounter(nodeAddress, nodesInfo.getOwnCounter());
 		
 		// Now that info of all nodes is update, publish own info to all the nodes.
-		PublishToAllNodes(countManager.GetCounter());
+		this.publishToAllNodes(countManager.getCounter());
 	}	
 }

@@ -23,7 +23,7 @@ public class NodesManager implements INodesManager {
 	 * 	{@inheritDoc}
 	 */
 	@Override
-	public Collection<ServerInfo> GetAllNodes()
+	public Collection<ServerInfo> getAllNodes()
 	{
 		return serverToCounterMap.keySet();
 	}
@@ -32,7 +32,7 @@ public class NodesManager implements INodesManager {
 	 * 	{@inheritDoc}
 	 */
 	@Override
-	public Map<ServerInfo, Counter> GetNodesToCounterMapping()
+	public Map<ServerInfo, Counter> getNodesToCounterMapping()
 	{
 		return serverToCounterMap;
 	}
@@ -41,7 +41,7 @@ public class NodesManager implements INodesManager {
 	 * 	{@inheritDoc}
 	 */
 	@Override
-	public Collection<Counter> GetAllCounters()
+	public Collection<Counter> getAllCounters()
 	{
 		return serverToCounterMap.values();
 	}
@@ -50,7 +50,7 @@ public class NodesManager implements INodesManager {
 	 * 	{@inheritDoc}
 	 */
 	@Override
-	public synchronized boolean UpdateCounter(ServerInfo node, Counter counter)
+	public synchronized boolean updateCounter(ServerInfo node, Counter counter)
 	{
 		Counter oldCounter = serverToCounterMap.getOrDefault(node, null);
 		
@@ -59,7 +59,7 @@ public class NodesManager implements INodesManager {
 			boolean decrementUpdated = true;
 			boolean incrementUpdated = true;
 
-			if(!oldCounter.UpdateDecrementCounter(counter.getDecrementCounter()))
+			if(!oldCounter.updateDecrementCounter(counter.getDecrementCounter()))
 			{
 				logger.warn("Update to decrement counter failed (Possibly as old value is greater) for %s. Old Value: %d, New Value: %d", 
 						node.toString(), 
@@ -68,7 +68,7 @@ public class NodesManager implements INodesManager {
 				decrementUpdated = false;
 			}
 			
-			if(!oldCounter.UpdateIncrementCounter(counter.getIncrementCounter()))
+			if(!oldCounter.updateIncrementCounter(counter.getIncrementCounter()))
 			{
 				logger.warn("Update to increment counter failed (Possibly as old value is greater) for {}. Old Value: {}, New Value: {}", 
 						node.toString(), 

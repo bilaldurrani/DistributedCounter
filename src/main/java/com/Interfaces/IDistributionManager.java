@@ -13,7 +13,7 @@ public interface IDistributionManager {
 	 * @param counter				The counter the publish.
 	 * @throws UnknownHostException	Can throw an unknown host exception if this node's IP address cannot be resolved.
 	 */
-	void PublishToAllNodes(Counter counter) throws UnknownHostException;
+	void publishToAllNodes(Counter counter) throws UnknownHostException;
 	
 	/**
 	 * Registers with a node. As part of registration:
@@ -25,5 +25,5 @@ public interface IDistributionManager {
 	 * @param nodeToRegisterWith	The remote node to initiate the registration with.
 	 * @throws UnknownHostException	Can throw an unknown host exception if this node's IP address cannot be resolved.
 	 */
-	void Register(ServerInfo nodeToRegisterWith) throws UnknownHostException;
+	void register(ServerInfo nodeToRegisterWith) throws UnknownHostException;
 }

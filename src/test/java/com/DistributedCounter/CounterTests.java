@@ -43,7 +43,7 @@ public class CounterTests {
 	{
 		Counter oldCounter = new Counter(5,10);
 		
-		assertThat(oldCounter.UpdateIncrementCounter(20)).isTrue();
+		assertThat(oldCounter.updateIncrementCounter(20)).isTrue();
 	}
 	
 	@Test
@@ -51,7 +51,7 @@ public class CounterTests {
 	{
 		Counter oldCounter = new Counter(5,10);
 		
-		assertThat(oldCounter.UpdateIncrementCounter(1)).isFalse();
+		assertThat(oldCounter.updateIncrementCounter(1)).isFalse();
 	}
 	
 	@Test
@@ -59,7 +59,7 @@ public class CounterTests {
 	{
 		Counter oldCounter = new Counter(5,10);
 		
-		assertThat(oldCounter.UpdateDecrementCounter(20)).isTrue();
+		assertThat(oldCounter.updateIncrementCounter(20)).isTrue();
 	}
 	
 	@Test
@@ -67,7 +67,7 @@ public class CounterTests {
 	{
 		Counter oldCounter = new Counter(5,10);
 		
-		assertThat(oldCounter.UpdateDecrementCounter(1)).isFalse();
+		assertThat(oldCounter.updateIncrementCounter(1)).isFalse();
 	}
 	
 	@Test
