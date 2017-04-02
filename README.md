@@ -32,8 +32,15 @@ Start 3rd node on 8082 and register with cluster using 8080 or 8081
 - **GET /nodesinfo**            : Gets all the registered nodes and their counters saved in the current node. 
 - **PUT /update**               : This is the receive states updates (Counter information) from other nodes. 
 
+# Limitations:
+1. The max count is an Int, so can be -2,147,483,648 to 2,147,483, 647. This can be fixed by using big number. But that would increase the serialization/deserialization complexity.
+
+2. There is no file storage being done; but data persistance will remain as long as there is at least 1 node still up. eg: If node a and node b are working and node a goes down, then node b will still work and not lose any info. As soon as node a comes back online and registers with node b; node b will return to it the last counter states it had of node a and node a will initialize using those states.
+
+3. Registration needs to be done of a node one at a time (cannot start multiple nodes at the same time).If node C is online and A & B simultaneuously try to register to C, then the node whose registeration starts first with C will not get the info about the other node (as C might be still processing the other node's info).
+This can be fixed by changing the "/update" endpoint to return back nodes information. EG: if registration is partial and A didn't get B's info. On the next /increment operation to A, A will do /update to C (not to B as it doesn't have B's info). In response C will return all it's node's info, which will put A in sync and A will then have all the cluster's info.
+
 # Known issues:
-1. If node a & b are registered to node c at the same time. Then node a & b might not have info about each other. This can be fixed by changing the "Update" endpoint to return back nodes information. This will make the system self heal and eventually consistant.
 
 2. If a node goes down, then the remaining nodes will still try to keep sending it their state information. This can be fixed using a circtuit breaker.
 
