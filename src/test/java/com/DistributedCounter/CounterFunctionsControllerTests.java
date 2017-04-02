@@ -16,10 +16,12 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.util.NestedServletException;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.mockito.BDDMockito.*;
 import static org.mockito.Matchers.any;
@@ -81,5 +83,26 @@ public class CounterFunctionsControllerTests {
 		this.mockMvc.perform(get("/counter"))
 			.andExpect(status().isOk())
 			.andExpect(content().string(containsString(Integer.toString(expectedCount))));
+	}
+	
+	@Test(expected = NestedServletException.class)
+	public void Count_CheckIntOverFlow() throws Exception	{
+		Collection<Counter> counters = new ArrayList<Counter>();
+		
+		counters.add(new Counter(Integer.MAX_VALUE, 1));
+		counters.add(new Counter(Integer.MAX_VALUE, 2));
+		
+		int ownCount = 50;
+		
+		Mockito.when(this.nodesManager.getAllCounters()).thenReturn(counters);
+		Mockito.when(this.countManager.getCount()).thenReturn(ownCount);
+		
+		try {
+			this.mockMvc.perform(get("/counter"));
+		}
+		catch(NestedServletException e) {
+			assertThat(e.getCause()).isInstanceOf(ArithmeticException.class);
+			throw e;
+		}
 	}
 }

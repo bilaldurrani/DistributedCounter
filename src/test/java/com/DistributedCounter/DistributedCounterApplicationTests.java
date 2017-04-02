@@ -39,7 +39,7 @@ public class DistributedCounterApplicationTests {
 	public void Registeration() throws Exception {
 		Mockito.when(ctx.getBean(IDistributionManager.class)).thenReturn(manager);
 		
-		DistributedCounterApplication.RegisterWithNode(ctx, "TEST");
+		DistributedCounterApplication.registerWithNode(ctx, "TEST");
 		
 		Mockito.verify(manager).register(new ServerInfo("TEST"));
 	}
@@ -49,6 +49,6 @@ public class DistributedCounterApplicationTests {
 		Mockito.when(ctx.getBean(IDistributionManager.class)).thenReturn(manager);
 		Mockito.doThrow(UnknownHostException.class).when(this.manager).register(any());
 		
-		DistributedCounterApplication.RegisterWithNode(ctx, "TEST");
+		DistributedCounterApplication.registerWithNode(ctx, "TEST");
 	}
 }

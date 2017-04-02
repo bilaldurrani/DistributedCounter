@@ -68,8 +68,7 @@ public class ConnectionManager implements IConnectionManager{
 			
 			logger.info("Getting NodesInfo using URL: {}", url);
 			
-			NodesInfoResponse response = restTemplate.getForObject(url, NodesInfoResponse.class);
-			return response;
+			return restTemplate.getForObject(url, NodesInfoResponse.class);
 		}
 		catch(RestClientException e)
 		{

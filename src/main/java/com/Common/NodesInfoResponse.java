@@ -10,7 +10,7 @@ public class NodesInfoResponse {
 	private Map<ServerInfo, Counter> nodesInfo;
 
 	public NodesInfoResponse() {
-		nodesInfo = new HashMap<ServerInfo, Counter>();
+		nodesInfo = new HashMap<>();
 		setOwnCounter(new Counter());
 	}
 

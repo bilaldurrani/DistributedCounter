@@ -39,7 +39,7 @@ public class DistributionController {
 	 * 				This response has their IPs and their Counter states.
 	 */
 	@RequestMapping(value = "/nodesinfo", method = RequestMethod.GET)
-	NodesInfoResponse GetNodesInfo()
+	NodesInfoResponse getNodesInfo()
 	{
 		NodesInfoResponse response = new NodesInfoResponse();
 		response.setNodesInfo(nodesManager.getNodesToCounterMapping());
@@ -55,7 +55,7 @@ public class DistributionController {
 	 * @return 		The node info is format http://IP:PORT
 	 */
 	@RequestMapping(value = "/nodeconnectioninfo", method = RequestMethod.GET)
-	ResponseEntity<ServerInfo> GetNodeConnectionInfo(HttpServletResponse response) {
+	ResponseEntity<ServerInfo> getNodeConnectionInfo(HttpServletResponse response) {
 		try {
 			ServerInfo info = serverInfoProvider.getServerInfo();
 			logger.info("Current server info: {}", info);
@@ -74,7 +74,7 @@ public class DistributionController {
 	 * @return			HTTP status to tell whether the state was updated or not (Not being used right now).
 	 */
     @RequestMapping(value = "/update", method = RequestMethod.PUT)
-    void Update(@RequestBody UpdateRequest request, HttpServletResponse response) {
+    void update(@RequestBody UpdateRequest request, HttpServletResponse response) {
     	logger.info("Received update Request: %s", request);
         boolean isUpdated = nodesManager.updateCounter(request.getServerInfo(), request.getCounter());
         

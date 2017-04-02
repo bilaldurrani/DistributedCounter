@@ -31,13 +31,13 @@ public class DistributedCounterApplication {
 		if (args.length > 1) {
 			// Not checking that args[1] really is an IP. In worst case the
 			// Registration logic will do a throw and exception.
-			RegisterWithNode(ctx, args[1]);
+			registerWithNode(ctx, args[1]);
 		}
 	}
 
 	/**
-	 * Registers the current node with a remote node. TODO: This should be done
-	 * in a better way (Running when application started event is fired).
+	 * Registers the current node with a remote node. 
+	 * NOTE: This should be done in a better way (Running when application started event is fired).
 	 * 
 	 * @param ctx
 	 *            ApplicationContext from Spring. Needed to resolve
@@ -47,7 +47,7 @@ public class DistributedCounterApplication {
 	 * @throws Exception
 	 *             Throws an exception if the registration is not successful.
 	 */
-	public static void RegisterWithNode(ApplicationContext ctx, String node) throws UnknownHostException {
+	public static void registerWithNode(ApplicationContext ctx, String node) throws UnknownHostException {
 		IDistributionManager distributionManager = ctx.getBean(IDistributionManager.class);
 
 		try {

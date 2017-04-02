@@ -33,7 +33,7 @@ public class CounterFunctionsController {
 	 * @throws Exception
 	 */
     @PostMapping("/increment")
-    void Increment() throws UnknownHostException {
+    void increment() throws UnknownHostException {
         int c = countManager.increment();
         logger.info("Incrementing counter. New value: {}", c);
         
@@ -45,7 +45,7 @@ public class CounterFunctionsController {
 	 * @throws Exception
 	 */
     @PostMapping("/decrement")
-    void Decrement() throws UnknownHostException {
+    void decrement() throws UnknownHostException {
     	int c = countManager.decrement();
     	logger.info("Decrementing counter. New value: {}", c);
     	
@@ -58,14 +58,14 @@ public class CounterFunctionsController {
      * @return	The current Count of the distributed counter.
      */
     @GetMapping("/counter")
-    int GetCount()
+    int getCount() throws ArithmeticException 
     {
     	logger.info("Getting Count");
     	
     	Collection<Counter> counters = nodesManager.getAllCounters();
     	
-    	Optional<Integer> allIncrements = counters.stream().map(c -> c.getIncrementCounter()).reduce((i,k) -> i+k);
-    	Optional<Integer> allDecrements = counters.stream().map(c -> c.getDecrementCounter()).reduce((i,k) -> i+k);
+    	Optional<Integer> allIncrements = counters.stream().map(c -> c.getIncrementCounter()).reduce((i,k) -> Math.addExact(i, k));
+    	Optional<Integer> allDecrements = counters.stream().map(c -> c.getDecrementCounter()).reduce((i,k) -> Math.addExact(i, k));
     	
     	
     	int globalCount = 
@@ -73,7 +73,7 @@ public class CounterFunctionsController {
     			- 
     			(allDecrements.isPresent() ? allDecrements.get() : 0);
     	
-    	// TODO: Possibly the global count can be a Big Integer to reduce the chances of overflow.
+    	// NOTE: Possibly the global count can be a Big Integer to reduce the chances of overflow.
     	return countManager.getCount() + globalCount;
     }
 }

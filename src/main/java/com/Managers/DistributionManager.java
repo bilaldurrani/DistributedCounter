@@ -19,7 +19,7 @@ public class DistributionManager implements IDistributionManager {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
-	IServerInfoProvider ServerInfoProvider;
+	IServerInfoProvider serverInfoProvider;
 	
 	@Autowired
 	IConnectionManager connectionManager;
@@ -37,7 +37,7 @@ public class DistributionManager implements IDistributionManager {
 	public void publishToAllNodes(Counter counter) throws UnknownHostException {
 		
 		Collection<ServerInfo> nodes = nodesManager.getAllNodes();
-		ServerInfo serverInfo = ServerInfoProvider.getServerInfo();
+		ServerInfo serverInfo = serverInfoProvider.getServerInfo();
 
 		for(ServerInfo node: nodes)
 		{
@@ -53,7 +53,7 @@ public class DistributionManager implements IDistributionManager {
 	public void register(ServerInfo nodeToRegisterWith) throws UnknownHostException	{
 		
 		ServerInfo nodeAddress = connectionManager.getNodeConnectionInfo(nodeToRegisterWith);
-		ServerInfo thisServerInfo = ServerInfoProvider.getServerInfo();
+		ServerInfo thisServerInfo = serverInfoProvider.getServerInfo();
 		NodesInfoResponse nodesInfo = connectionManager.getNodesInfo(nodeAddress);
 		
 		nodesInfo.getNodesInfo().forEach((node, counter) -> {

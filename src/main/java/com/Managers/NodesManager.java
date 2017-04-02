@@ -17,7 +17,7 @@ public class NodesManager implements INodesManager {
 	
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-	private Map<ServerInfo, Counter> serverToCounterMap = new HashMap<ServerInfo, Counter>();
+	private Map<ServerInfo, Counter> serverToCounterMap = new HashMap<>();
 
 	/**
 	 * 	{@inheritDoc}
