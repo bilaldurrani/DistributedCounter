@@ -19,15 +19,12 @@ Start 3rd node on 8082 and register with cluster using 8080 or 8081
 
 - **POST /increment** : Increments the local increment counter and publishes the states to all connected nodes
 - **POST /decrement** : Increments the local decrement counter and publishes the states to all connected nodes
-
-**NOTES:**
-1. If increment of decrement cannot publish to all nodes, or some connection fails, then there is no retry. The system is AP and will eventually be consisten when another increment/decrement is done as it will cause another publish to happen. This can be fixed by
- 1. Having an internal queue of failed network commands and have a scheduled tasks which retries all the failed commands.
- 2. Add a new endpoint /Sync. And have a cron job which calls /Sync every X amount of time. This will remove the need to have thread    handling within the service. (Cassandra also has a Update command which needs to be called routinely to keep all the nodes in sync).
-
 - **GET /counter** : Each node has all the counter information of all the nodes. Running this request will do: Total Count = (Sum all Incrment Counters) - (Sum all Iecrement Counters).
 
-
+**NOTES:**
+  - If increment of decrement cannot publish to all nodes, or some connection fails, then there is no retry. The system is AP and will eventually be consisten when another increment/decrement is done as it will cause another publish to happen. This can be fixed by
+    1. Having an internal queue of failed network commands and have a scheduled tasks which retries all the failed commands.
+    2. Add a new endpoint /Sync. And have a cron job which calls /Sync every X amount of time. This will remove the need to have thread    handling within the service. (Cassandra also has a Update command which needs to be called routinely to keep all the nodes in sync).
 
 **Commands for node-to-node communication**
 
