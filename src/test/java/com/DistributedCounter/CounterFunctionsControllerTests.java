@@ -1,10 +1,14 @@
-package com.DistributedCounter;
+package com.distributedcounter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.Interfaces.ICountManager;
-import com.Interfaces.INodesManager;
-import com.Interfaces.IServerInfoProvider;
+import com.common.Counter;
+import com.controllers.CounterFunctionsController;
+import com.interfaces.ICountManager;
+import com.interfaces.IDistributionManager;
+import com.interfaces.INodesManager;
+import com.interfaces.IServerInfoProvider;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -15,10 +19,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
 import java.util.Collection;
-
-import com.Common.Counter;
-import com.Controllers.CounterFunctionsController;
-import com.Interfaces.IDistributionManager;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.mockito.BDDMockito.*;

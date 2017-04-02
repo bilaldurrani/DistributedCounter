@@ -1,9 +1,9 @@
-package com.Managers;
+package com.managers;
 
 import org.springframework.stereotype.Service;
 
-import com.Common.ServerInfo;
-import com.Interfaces.IRouteProvider;
+import com.common.ServerInfo;
+import com.interfaces.IRouteProvider;
 
 @Service
 public class RouteProvider implements IRouteProvider {

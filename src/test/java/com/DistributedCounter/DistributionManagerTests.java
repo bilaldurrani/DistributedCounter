@@ -1,4 +1,4 @@
-package com.DistributedCounter;
+package com.distributedcounter;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,15 +15,16 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.Common.Counter;
-import com.Common.NodesInfoResponse;
-import com.Common.ServerInfo;
-import com.Common.UpdateRequest;
-import com.Interfaces.IConnectionManager;
-import com.Interfaces.ICountManager;
-import com.Interfaces.IDistributionManager;
-import com.Interfaces.INodesManager;
-import com.Interfaces.IServerInfoProvider;
+import com.common.Counter;
+import com.common.NodesInfoResponse;
+import com.common.ServerInfo;
+import com.common.UpdateRequest;
+import com.interfaces.IConnectionManager;
+import com.interfaces.ICountManager;
+import com.interfaces.IDistributionManager;
+import com.interfaces.INodesManager;
+import com.interfaces.IServerInfoProvider;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.*;
 

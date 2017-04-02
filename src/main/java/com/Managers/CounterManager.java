@@ -1,9 +1,9 @@
-package com.Managers;
+package com.managers;
 
 import org.springframework.stereotype.Service;
 
-import com.Common.Counter;
-import com.Interfaces.*;
+import com.common.Counter;
+import com.interfaces.*;
 
 @Service
 public class CounterManager implements ICountManager {

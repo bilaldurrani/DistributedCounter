@@ -1,4 +1,4 @@
-package com.DistributedCounter;
+package com.distributedcounter;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,11 +15,11 @@ import org.springframework.web.client.RestTemplate;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Matchers.any;
 
-import com.Common.NodesInfoResponse;
-import com.Common.ServerInfo;
-import com.Common.UpdateRequest;
-import com.Interfaces.IConnectionManager;
-import com.Interfaces.IRouteProvider;
+import com.common.NodesInfoResponse;
+import com.common.ServerInfo;
+import com.common.UpdateRequest;
+import com.interfaces.IConnectionManager;
+import com.interfaces.IRouteProvider;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

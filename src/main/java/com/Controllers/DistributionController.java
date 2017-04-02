@@ -1,4 +1,4 @@
-package com.Controllers;
+package com.controllers;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.Common.NodesInfoResponse;
-import com.Common.ServerInfo;
-import com.Common.UpdateRequest;
-import com.Interfaces.ICountManager;
-import com.Interfaces.INodesManager;
-import com.Interfaces.IServerInfoProvider;
+import com.common.NodesInfoResponse;
+import com.common.ServerInfo;
+import com.common.UpdateRequest;
+import com.interfaces.ICountManager;
+import com.interfaces.INodesManager;
+import com.interfaces.IServerInfoProvider;
 
 @RestController
 public class DistributionController {
@@ -75,7 +75,7 @@ public class DistributionController {
 	 */
     @RequestMapping(value = "/update", method = RequestMethod.PUT)
     void Update(@RequestBody UpdateRequest request, HttpServletResponse response) {
-    	logger.info(String.format("Received update Request: %s", request));
+    	logger.info("Received update Request: %s", request);
         boolean isUpdated = nodesManager.UpdateCounter(request.getServerInfo(), request.getCounter());
         
         if(isUpdated) {

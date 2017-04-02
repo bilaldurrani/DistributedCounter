@@ -1,4 +1,4 @@
-package com.DistributedCounter;
+package com.distributedcounter;
 
 import org.springframework.context.ApplicationContext;
 
@@ -12,8 +12,10 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import com.Common.ServerInfo;
-import com.Interfaces.IDistributionManager;
+
+import com.common.ServerInfo;
+import com.distributedcounter.DistributedCounterApplication;
+import com.interfaces.IDistributionManager;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

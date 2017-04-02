@@ -1,4 +1,4 @@
-package com.Managers;
+package com.managers;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -8,9 +8,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.Common.Counter;
-import com.Common.ServerInfo;
-import com.Interfaces.INodesManager;
+import com.common.Counter;
+import com.common.ServerInfo;
+import com.interfaces.INodesManager;
 
 @Service
 public class NodesManager implements INodesManager {
@@ -61,7 +61,7 @@ public class NodesManager implements INodesManager {
 
 			if(!oldCounter.UpdateDecrementCounter(counter.getDecrementCounter()))
 			{
-				logger.warn("Update to decrement counter failed (Possibly as old value is greater) for {}. Old Value: {}, New Value: {}", 
+				logger.warn("Update to decrement counter failed (Possibly as old value is greater) for %s. Old Value: %d, New Value: %d", 
 						node.toString(), 
 						oldCounter.getDecrementCounter(), 
 						counter.getDecrementCounter());

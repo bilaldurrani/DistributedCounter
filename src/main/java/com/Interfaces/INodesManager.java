@@ -1,10 +1,10 @@
-package com.Interfaces;
+package com.interfaces;
 
 import java.util.Collection;
 import java.util.Map;
 
-import com.Common.Counter;
-import com.Common.ServerInfo;
+import com.common.Counter;
+import com.common.ServerInfo;
 
 public interface INodesManager {
 

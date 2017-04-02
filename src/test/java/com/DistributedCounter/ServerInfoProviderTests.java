@@ -1,4 +1,4 @@
-package com.DistributedCounter;
+package com.distributedcounter;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -12,9 +12,9 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import com.Common.ServerInfo;
-import com.Interfaces.IServerInfoProvider;
-import com.Managers.ServerInfoProvider;
+import com.common.ServerInfo;
+import com.interfaces.IServerInfoProvider;
+import com.managers.ServerInfoProvider;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(ServerInfoProvider.class)

@@ -1,4 +1,4 @@
-package com.Common;
+package com.common;
 
 public class Counter {
 	private int incrementCounter;

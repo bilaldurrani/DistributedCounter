@@ -1,6 +1,6 @@
-package com.Interfaces;
+package com.interfaces;
 
-import com.Common.ServerInfo;
+import com.common.ServerInfo;
 
 public interface IRouteProvider {
 	

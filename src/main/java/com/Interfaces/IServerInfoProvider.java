@@ -1,8 +1,8 @@
-package com.Interfaces;
+package com.interfaces;
 
 import java.net.UnknownHostException;
 
-import com.Common.ServerInfo;
+import com.common.ServerInfo;
 
 public interface IServerInfoProvider {
 

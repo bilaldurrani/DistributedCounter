@@ -1,6 +1,6 @@
-package com.Interfaces;
+package com.interfaces;
 
-import com.Common.Counter;
+import com.common.Counter;
 
 public interface ICountManager {
 

@@ -1,4 +1,4 @@
-package com.Managers;
+package com.managers;
 
 import java.net.UnknownHostException;
 import java.util.Collection;
@@ -6,11 +6,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.Common.Counter;
-import com.Common.NodesInfoResponse;
-import com.Common.ServerInfo;
-import com.Common.UpdateRequest;
-import com.Interfaces.*;
+
+import com.common.Counter;
+import com.common.NodesInfoResponse;
+import com.common.ServerInfo;
+import com.common.UpdateRequest;
+import com.interfaces.*;
 
 @Service
 public class DistributionManager implements IDistributionManager {

@@ -1,10 +1,14 @@
-package com.DistributedCounter;
+package com.distributedcounter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.Interfaces.ICountManager;
-import com.Interfaces.INodesManager;
-import com.Interfaces.IServerInfoProvider;
+import com.common.Counter;
+import com.common.ServerInfo;
+import com.controllers.DistributionController;
+import com.interfaces.ICountManager;
+import com.interfaces.INodesManager;
+import com.interfaces.IServerInfoProvider;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -17,9 +21,6 @@ import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.Common.Counter;
-import com.Common.ServerInfo;
-import com.Controllers.DistributionController;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.mockito.BDDMockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;

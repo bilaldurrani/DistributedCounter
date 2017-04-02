@@ -1,4 +1,4 @@
-package com.DistributedCounter;
+package com.distributedcounter;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

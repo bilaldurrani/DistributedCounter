@@ -1,8 +1,8 @@
-package com.Interfaces;
+package com.interfaces;
 
-import com.Common.NodesInfoResponse;
-import com.Common.ServerInfo;
-import com.Common.UpdateRequest;
+import com.common.NodesInfoResponse;
+import com.common.ServerInfo;
+import com.common.UpdateRequest;
 
 /**
  * Interface dealing with node-to-node communication.

@@ -1,4 +1,4 @@
-package com.Managers;
+package com.managers;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,11 +8,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-import com.Common.NodesInfoResponse;
-import com.Common.ServerInfo;
-import com.Common.UpdateRequest;
-import com.Interfaces.IConnectionManager;
-import com.Interfaces.IRouteProvider;
+import com.common.NodesInfoResponse;
+import com.common.ServerInfo;
+import com.common.UpdateRequest;
+import com.interfaces.IConnectionManager;
+import com.interfaces.IRouteProvider;
 
 @Service
 public class ConnectionManager implements IConnectionManager{
@@ -31,7 +31,6 @@ public class ConnectionManager implements IConnectionManager{
 	@Override
 	public ServerInfo GetNodeConnectionInfo(ServerInfo node)
 	{
-		//RestTemplate restTemplate = new RestTemplate();
 		String url = routeProvider.GetNodeConnectionInfoUrl(node);
 
 		logger.info("Getting connection info using URL: {}", url);
@@ -47,7 +46,6 @@ public class ConnectionManager implements IConnectionManager{
 	public void SyncWithNode(ServerInfo node, UpdateRequest request) {
 	
 		try {
-			//RestTemplate restTemplate = new RestTemplate();
 			String url = routeProvider.GetUpdateUrl(node);
 			
 			logger.info("Sending update/sync request using URL: {}", url);
@@ -66,7 +64,6 @@ public class ConnectionManager implements IConnectionManager{
 	@Override
 	public NodesInfoResponse GetNodesInfo(ServerInfo node) {
 		try {
-			//RestTemplate restTemplate = new RestTemplate();
 			String url = routeProvider.GetNodesInfoUrl(node);
 			
 			logger.info("Getting NodesInfo using URL: {}", url);

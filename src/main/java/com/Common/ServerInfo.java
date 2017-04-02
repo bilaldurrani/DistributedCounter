@@ -1,10 +1,10 @@
-package com.Common;
+package com.common;
 
 public class ServerInfo {
 	private String serverIpAndPort;
 	
 	public ServerInfo(){
-	
+		serverIpAndPort = "";
 	}
 	
 	public ServerInfo(String serverInfo){
@@ -31,7 +31,7 @@ public class ServerInfo {
 	
 	@Override
 	public boolean equals(Object obj) {
-		if(this.getClass().isInstance(obj)) {
+		if(obj != null && this.getClass().isInstance(obj)) {
 			return ((ServerInfo)obj).getServerIpAndPort().equals(serverIpAndPort);
 		}
 		

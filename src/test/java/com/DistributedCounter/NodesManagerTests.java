@@ -1,4 +1,4 @@
-package com.DistributedCounter;
+package com.distributedcounter;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -9,10 +9,10 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.Common.Counter;
-import com.Common.ServerInfo;
-import com.Interfaces.INodesManager;
-import com.Managers.NodesManager;
+import com.common.Counter;
+import com.common.ServerInfo;
+import com.interfaces.INodesManager;
+import com.managers.NodesManager;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

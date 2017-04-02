@@ -1,5 +1,6 @@
-package com.Controllers;
+package com.controllers;
 
+import java.net.UnknownHostException;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -10,10 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.Common.Counter;
-import com.Interfaces.ICountManager;
-import com.Interfaces.IDistributionManager;
-import com.Interfaces.INodesManager;
+import com.common.Counter;
+import com.interfaces.*;
 
 @RestController
 public class CounterFunctionsController {
@@ -34,7 +33,7 @@ public class CounterFunctionsController {
 	 * @throws Exception
 	 */
     @PostMapping("/increment")
-    void Increment() throws Exception {
+    void Increment() throws UnknownHostException {
         int c = countManager.Increment();
         logger.info("Incrementing counter. New value: {}", c);
         
@@ -46,7 +45,7 @@ public class CounterFunctionsController {
 	 * @throws Exception
 	 */
     @PostMapping("/decrement")
-    void Decrement() throws Exception {
+    void Decrement() throws UnknownHostException {
     	int c = countManager.Decrement();
     	logger.info("Decrementing counter. New value: {}", c);
     	
@@ -68,7 +67,11 @@ public class CounterFunctionsController {
     	Optional<Integer> allIncrements = counters.stream().map(c -> c.getIncrementCounter()).reduce((i,k) -> i+k);
     	Optional<Integer> allDecrements = counters.stream().map(c -> c.getDecrementCounter()).reduce((i,k) -> i+k);
     	
-    	int globalCount = allIncrements.get() - allDecrements.get();
+    	
+    	int globalCount = 
+    			(allIncrements.isPresent() ? allIncrements.get() : 0) 
+    			- 
+    			(allDecrements.isPresent() ? allDecrements.get() : 0);
     	
     	// TODO: Possibly the global count can be a Big Integer to reduce the chances of overflow.
     	return countManager.GetCount() + globalCount;
