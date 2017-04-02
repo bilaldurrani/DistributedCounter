@@ -33,7 +33,8 @@ Start 3rd node on 8082 and register with cluster using 8080 or 8081
 - **PUT /update**               : This is the receive states updates (Counter information) from other nodes. 
 
 # Limitations:
-1. The max count is an Int, so can be -2,147,483,648 to 2,147,483, 647. This can be fixed by using big number. But that would increase the serialization/deserialization complexity.
+
+1. The max counter is an Int, so can be -2,147,483,648 to 2,147,483, 647. This can be fixed by using big number. But that would increase the serialization/deserialization complexity.
 
 2. There is no file storage being done; but data persistance will remain as long as there is at least 1 node still up. eg: If node a and node b are working and node a goes down, then node b will still work and not lose any info. As soon as node a comes back online and registers with node b; node b will return to it the last counter states it had of node a and node a will initialize using those states.
 
@@ -42,6 +43,6 @@ This can be fixed by changing the "/update" endpoint to return back nodes inform
 
 # Known issues:
 
-2. If a node goes down, then the remaining nodes will still try to keep sending it their state information. This can be fixed using a circtuit breaker.
+2. If a node goes down, then the remaining nodes will still try to keep sending it their state information. This will decrease performance as a Timout has to happen. This can be fixed using a circtuit breaker and stop sending updates to the offline node. 
 
-3.
+3. If all node's counters count to be larged then int.max, then an overflow exception will be thrown. Can possible use big integer just for calculating the count.
