@@ -13,6 +13,8 @@ Start 2nd node on 8081 and register with cluster using 8080
 Start 3rd node on 8082 and register with cluster using 8080 or 8081
 `java -jar .\target\DistributedCounter-0.0.1-SNAPSHOT.jar --server.port=8082 http://localhost:8081`
 
+**NOTE: For starting each node, verify that there is no other registration in progress (See limitations below)**
+
 # Supported Commands
 
 **Commands for consumers to use**
