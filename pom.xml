@@ -3,13 +3,13 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.DistributedCounter</groupId>
-	<artifactId>DistributedCounter</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<groupId>com.distributedcounter</groupId>
+	<artifactId>distributedcounter</artifactId>
+	<version>1.0.0</version>
 	<packaging>jar</packaging>
 
-	<name>DistributedCounter</name>
-	<description>DistributedCounter</description>
+	<name>distributedcounter</name>
+	<description>distributedcounter</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -84,4 +84,5 @@
 	</build>
 
 
+	<url>https://github.com/bilaldurrani/DistributedCounter</url>
 </project>
