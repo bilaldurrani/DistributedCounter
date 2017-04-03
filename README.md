@@ -46,3 +46,5 @@ This can be fixed by changing the "/update" endpoint to return back nodes inform
 2. If a node goes down, then the remaining nodes will still try to keep sending it their state information. This will decrease performance as a Timout has to happen. This can be fixed using a circtuit breaker and stop sending updates to the offline node. 
 
 3. If all node's counters count to be larged then int.max, then an overflow exception will be thrown. Can possible use big integer just for calculating the count.
+
+**Test Coverage: 97.6%** (But some tests don't verify 100% each property used)
