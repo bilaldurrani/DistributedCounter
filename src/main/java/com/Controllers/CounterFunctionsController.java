@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.common.Counter;
@@ -30,25 +30,33 @@ public class CounterFunctionsController {
 	
 	/**
 	 * Increments the local counter by 1 and publishes the counter state to all the nodes.
-	 * @throws Exception
+	 * @throws UnknownHostException
 	 */
-    @PostMapping("/increment")
+	// Probably Put is not the best to use, but using PUT as this call will update the increment counter.
+    @PutMapping("/increment")
     void increment() throws UnknownHostException {
         int c = countManager.increment();
         logger.info("Incrementing counter. New value: {}", c);
         
+        // If publish to all nodes fail, we do nothing. A subsequent increment will publish the current node's state again.
+        // The system is designed as AP and will eventually be consistent. 
+        // This can be fixed by having a queue of all the failed requests and a thread which periodically retries them.
         distributionManager.publishToAllNodes(countManager.getCounter());
     }
 
 	/**
 	 * Decrements the local counter by 1 and publishes the counter state to all the nodes.
-	 * @throws Exception
+	 * @throws UnknownHostException
 	 */
-    @PostMapping("/decrement")
+ // Probably Put is not the best to use, but using PUT as this call will update the decrement counter.
+    @PutMapping("/decrement")
     void decrement() throws UnknownHostException {
     	int c = countManager.decrement();
     	logger.info("Decrementing counter. New value: {}", c);
     	
+    	// If publish to all nodes fail, we do nothing. A subsequent increment will publish the current node's state again.
+        // The system is designed as AP and will eventually be consistent. 
+        // This can be fixed by having a queue of all the failed requests and a thread which periodically retries them.
     	distributionManager.publishToAllNodes(countManager.getCounter());
     }
     
@@ -64,9 +72,9 @@ public class CounterFunctionsController {
     	
     	Collection<Counter> counters = nodesManager.getAllCounters();
     	
+    	// If the total sum of the nodes is greater then int.max then an exception will be thrown. This can be fixed by using something like big integer.
     	Optional<Integer> allIncrements = counters.stream().map(c -> c.getIncrementCounter()).reduce((i,k) -> Math.addExact(i, k));
     	Optional<Integer> allDecrements = counters.stream().map(c -> c.getDecrementCounter()).reduce((i,k) -> Math.addExact(i, k));
-    	
     	
     	int globalCount = 
     			(allIncrements.isPresent() ? allIncrements.get() : 0) 

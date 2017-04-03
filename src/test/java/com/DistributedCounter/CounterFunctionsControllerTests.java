@@ -26,7 +26,7 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.mockito.BDDMockito.*;
 import static org.mockito.Matchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -51,7 +51,7 @@ public class CounterFunctionsControllerTests {
 	
 	@Test
     public void Increment() throws Exception {
-		this.mockMvc.perform(post("/increment")).andExpect(status().isOk());
+		this.mockMvc.perform(put("/increment")).andExpect(status().isOk());
 		
 		Mockito.verify(this.countManager).increment();
 		Mockito.verify(this.distributionManager).publishToAllNodes(any());
@@ -59,7 +59,7 @@ public class CounterFunctionsControllerTests {
 	
 	@Test
     public void Decrement() throws Exception {
-		this.mockMvc.perform(post("/decrement")).andExpect(status().isOk());
+		this.mockMvc.perform(put("/decrement")).andExpect(status().isOk());
 		
 		Mockito.verify(this.countManager).decrement();
 		Mockito.verify(this.distributionManager).publishToAllNodes(any());
