@@ -20,7 +20,7 @@ import com.interfaces.IDistributionManager;
  *
  */
 @SpringBootApplication
-@ComponentScan(basePackages = { "com.distributedCounter", "com.interfaces", "com.managers", "com.common", "com.controllers" }) 
+@ComponentScan(basePackages = { "com.distributedcounter", "com.interfaces", "com.managers", "com.common", "com.controllers" }) 
 public class DistributedCounterApplication {
 
 	private static final Logger logger = LoggerFactory.getLogger("DistributedCounterApplication.Main");
