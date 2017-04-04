@@ -59,7 +59,7 @@ This can be fixed by changing the "/update" endpoint to return back nodes inform
 
 **Test Coverage: 97.6% - See folder /TestCoverageReport** (But some tests don't verify 100% each property used)
 
-#Example Usage
+# Example Usage
 
 Start 3 node cluster (Please make sure the node is fully up before starting the next command - See limitations)
 - `java -jar .\target\distributedcounter-1.0.0.jar --server.port=8080`
