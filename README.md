@@ -5,13 +5,13 @@ Distributed Counter implementation using CRDT (https://en.wikipedia.org/wiki/Con
 Build: `mvn clean install`
 
 Start 1 node on 8080:
-`java -jar .\target\DistributedCounter-0.0.1-SNAPSHOT.jar --server.port=8080`
+`java -jar .\target\distributedcounter-1.0.0.jar --server.port=8080`
 
 Start 2nd node on 8081 and register with cluster using 8080
-`java -jar .\target\DistributedCounter-0.0.1-SNAPSHOT.jar --server.port=8081 http://localhost:8080`
+`java -jar .\target\distributedcounter-1.0.0.jar --server.port=8081 http://localhost:8080`
 
 Start 3rd node on 8082 and register with cluster using 8080 or 8081
-`java -jar .\target\DistributedCounter-0.0.1-SNAPSHOT.jar --server.port=8082 http://localhost:8081`
+`java -jar .\target\distributedcounter-1.0.0.jar --server.port=8082 http://localhost:8081`
 
 **NOTE: For starting each node, verify that there is no other registration in progress (See limitations below)**
 
@@ -42,6 +42,8 @@ Start 3rd node on 8082 and register with cluster using 8080 or 8081
 
 3. Registration needs to be done of a node one at a time (cannot start multiple nodes at the same time).If node C is online and A & B simultaneuously try to register to C, then the node whose registeration starts first with C will not get the info about the other node (as C might be still processing the other node's info).
 This can be fixed by changing the "/update" endpoint to return back nodes information. EG: if registration is partial and A didn't get B's info. On the next /increment operation to A, A will do /update to C (not to B as it doesn't have B's info). In response C will return all it's node's info, which will put A in sync and A will then have all the cluster's info.
+
+4. Each node's unique ID is IP:PORT. The IP is taken from InetAddress. It's not checked that the IP taken is from the same eth interface as Tomcat is using. I had an issue that while running Docker, But InetAddress would give me back Docker's interface. This interface is not usable for making HTTP calls because of it's configuration. This basically caused the node's Key to be wrong and wouldn't allow other nodes to connect to it (the node Key = the node's IP to use for registration). Wordaround is to disable unused eth interfaces if issues are coming up.
 
 # Known issues:
 
