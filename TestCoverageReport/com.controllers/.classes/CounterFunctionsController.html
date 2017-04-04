@@ -1,0 +1,170 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: CounterFunctionsController</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">com.controllers</a> ]
+</div>
+
+<h1>Coverage Summary for Class: CounterFunctionsController (com.controllers)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">CounterFunctionsController</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (18/ 18)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package com.controllers;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import java.net.UnknownHostException;
+<i>4</i>&nbsp;import java.util.Collection;
+<i>5</i>&nbsp;import java.util.Optional;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;import org.slf4j.Logger;
+<i>8</i>&nbsp;import org.slf4j.LoggerFactory;
+<i>9</i>&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+<i>10</i>&nbsp;import org.springframework.web.bind.annotation.GetMapping;
+<i>11</i>&nbsp;import org.springframework.web.bind.annotation.PutMapping;
+<i>12</i>&nbsp;import org.springframework.web.bind.annotation.RestController;
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;import com.common.Counter;
+<i>15</i>&nbsp;import com.interfaces.*;
+<i>16</i>&nbsp;
+<i>17</i>&nbsp;@RestController
+<b class="fc"><i>18</i>&nbsp;public class CounterFunctionsController {</b>
+<i>19</i>&nbsp;	   
+<b class="fc"><i>20</i>&nbsp;	private final Logger logger = LoggerFactory.getLogger(this.getClass());</b>
+<i>21</i>&nbsp;	
+<i>22</i>&nbsp;	@Autowired
+<i>23</i>&nbsp;	ICountManager countManager;
+<i>24</i>&nbsp;	
+<i>25</i>&nbsp;	@Autowired
+<i>26</i>&nbsp;	INodesManager nodesManager;
+<i>27</i>&nbsp;	
+<i>28</i>&nbsp;	@Autowired
+<i>29</i>&nbsp;	IDistributionManager distributionManager;
+<i>30</i>&nbsp;	
+<i>31</i>&nbsp;	/**
+<i>32</i>&nbsp;	 * Increments the local counter by 1 and publishes the counter state to all the nodes.
+<i>33</i>&nbsp;	 * @throws UnknownHostException
+<i>34</i>&nbsp;	 */
+<i>35</i>&nbsp;	// Using PUT and not POST as a resource (increment counter) is being Updated
+<i>36</i>&nbsp;    @PutMapping(&quot;/increment&quot;)
+<i>37</i>&nbsp;    void increment() throws UnknownHostException {
+<b class="fc"><i>38</i>&nbsp;        int c = countManager.increment();</b>
+<b class="fc"><i>39</i>&nbsp;        logger.info(&quot;Incrementing counter. New value: {}&quot;, c);</b>
+<i>40</i>&nbsp;        
+<i>41</i>&nbsp;        // If publish to all nodes fail, we do nothing. A subsequent increment will publish the current node&#39;s state again.
+<i>42</i>&nbsp;        // The system is designed as AP and will eventually be consistent. 
+<i>43</i>&nbsp;        // This can be fixed by having a queue of all the failed requests and a thread which periodically retries them.
+<b class="fc"><i>44</i>&nbsp;        distributionManager.publishToAllNodes(countManager.getCounter());</b>
+<b class="fc"><i>45</i>&nbsp;    }</b>
+<i>46</i>&nbsp;
+<i>47</i>&nbsp;	/**
+<i>48</i>&nbsp;	 * Decrements the local counter by 1 and publishes the counter state to all the nodes.
+<i>49</i>&nbsp;	 * @throws UnknownHostException
+<i>50</i>&nbsp;	 */
+<i>51</i>&nbsp;    // Using PUT and not POST as a resource (decrement counter) is being Updated
+<i>52</i>&nbsp;    @PutMapping(&quot;/decrement&quot;)
+<i>53</i>&nbsp;    void decrement() throws UnknownHostException {
+<b class="fc"><i>54</i>&nbsp;    	int c = countManager.decrement();</b>
+<b class="fc"><i>55</i>&nbsp;    	logger.info(&quot;Decrementing counter. New value: {}&quot;, c);</b>
+<i>56</i>&nbsp;    	
+<i>57</i>&nbsp;    	// If publish to all nodes fail, we do nothing. A subsequent increment will publish the current node&#39;s state again.
+<i>58</i>&nbsp;        // The system is designed as AP and will eventually be consistent. 
+<i>59</i>&nbsp;        // This can be fixed by having a queue of all the failed requests and a thread which periodically retries them.
+<b class="fc"><i>60</i>&nbsp;    	distributionManager.publishToAllNodes(countManager.getCounter());</b>
+<b class="fc"><i>61</i>&nbsp;    }</b>
+<i>62</i>&nbsp;    
+<i>63</i>&nbsp;    /**
+<i>64</i>&nbsp;     * Gets the current count. Takes the global count by taking sum of all Increment Counter and subtracting the sum of all Decrement Counters.
+<i>65</i>&nbsp;     * After that it adds the local counter count to generate the total count value. 
+<i>66</i>&nbsp;     * @return	The current Count of the distributed counter.
+<i>67</i>&nbsp;     */
+<i>68</i>&nbsp;    @GetMapping(&quot;/counter&quot;)
+<i>69</i>&nbsp;    int getCount() throws ArithmeticException 
+<i>70</i>&nbsp;    {
+<b class="fc"><i>71</i>&nbsp;    	logger.info(&quot;Getting Count&quot;);</b>
+<i>72</i>&nbsp;    	
+<b class="fc"><i>73</i>&nbsp;    	Collection&lt;Counter&gt; counters = nodesManager.getAllCounters();</b>
+<i>74</i>&nbsp;    	
+<i>75</i>&nbsp;    	// If the total sum of the nodes is greater then int.max then an exception will be thrown. This can be fixed by using something like big integer.
+<b class="fc"><i>76</i>&nbsp;    	Optional&lt;Integer&gt; allIncrements = counters.stream().map(c -&gt; c.getIncrementCounter()).reduce((i,k) -&gt; Math.addExact(i, k));</b>
+<b class="fc"><i>77</i>&nbsp;    	Optional&lt;Integer&gt; allDecrements = counters.stream().map(c -&gt; c.getDecrementCounter()).reduce((i,k) -&gt; Math.addExact(i, k));</b>
+<i>78</i>&nbsp;    	
+<b class="fc"><i>79</i>&nbsp;    	int globalCount = </b>
+<b class="fc"><i>80</i>&nbsp;    			(allIncrements.isPresent() ? allIncrements.get() : 0) </b>
+<i>81</i>&nbsp;    			- 
+<b class="fc"><i>82</i>&nbsp;    			(allDecrements.isPresent() ? allDecrements.get() : 0);</b>
+<i>83</i>&nbsp;    	
+<i>84</i>&nbsp;    	// NOTE: Possibly the global count can be a Big Integer to reduce the chances of overflow.
+<b class="fc"><i>85</i>&nbsp;    	return countManager.getCount() + globalCount;</b>
+<i>86</i>&nbsp;    }
+<i>87</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2017-04-04 12:59</div>
+</div>
+</body>
+</html>

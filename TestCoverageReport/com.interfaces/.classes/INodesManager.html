@@ -1,0 +1,86 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: INodesManager</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">com.interfaces</a> ]
+</div>
+
+<h1>Coverage Summary for Class: INodesManager (com.interfaces)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+</tr>
+  <tr>
+    <td class="name">INodesManager$$EnhancerByMockitoWithCGLIB$$4b60296a</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package com.interfaces;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import java.util.Collection;
+<i>4</i>&nbsp;import java.util.Map;
+<i>5</i>&nbsp;
+<i>6</i>&nbsp;import com.common.Counter;
+<i>7</i>&nbsp;import com.common.ServerInfo;
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;public interface INodesManager {
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;	/**
+<i>12</i>&nbsp;	 * Gets all the nodes.
+<i>13</i>&nbsp;	 * @return	List of all the nodes
+<i>14</i>&nbsp;	 */
+<i>15</i>&nbsp;	Collection&lt;ServerInfo&gt; getAllNodes();
+<i>16</i>&nbsp;
+<i>17</i>&nbsp;	/**
+<i>18</i>&nbsp;	 * Get all the remote counters that are locally stored. (Doesn&#39;t return own counter)
+<i>19</i>&nbsp;	 * @return	List of all the counters.
+<i>20</i>&nbsp;	 */
+<i>21</i>&nbsp;	Collection&lt;Counter&gt; getAllCounters();
+<i>22</i>&nbsp;
+<i>23</i>&nbsp;	/**
+<i>24</i>&nbsp;	 * Updates a remote counters locally. 
+<i>25</i>&nbsp;	 * @param nodeInfo	The node whose counter to update.
+<i>26</i>&nbsp;	 * @param counter	The new counter value.
+<i>27</i>&nbsp;	 * @return			If the counter is not newer then it won&#39;t update the counter and return false.
+<i>28</i>&nbsp;	 */
+<i>29</i>&nbsp;	boolean updateCounter(ServerInfo nodeInfo, Counter counter);
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;	/**
+<i>32</i>&nbsp;	 * Get the Node to Counter mapping. The String is the node&#39;s IP.
+<i>33</i>&nbsp;	 * @return			Map of Node to Counter mapping.
+<i>34</i>&nbsp;	 */
+<i>35</i>&nbsp;	Map&lt;ServerInfo, Counter&gt; getNodesToCounterMapping();
+<i>36</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2017-04-04 12:59</div>
+</div>
+</body>
+</html>

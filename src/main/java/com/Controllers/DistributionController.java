@@ -74,6 +74,7 @@ public class DistributionController {
 	 * @return			HTTP status to tell whether the state was updated or not (Not being used right now).
 	 */
     @RequestMapping(value = "/update", method = RequestMethod.PUT)
+    // Using PUT and not POST as a resource (Cache of nodes information) is being Updated
     void update(@RequestBody UpdateRequest request, HttpServletResponse response) {
     	logger.info("Received update Request: %s", request);
         boolean isUpdated = nodesManager.updateCounter(request.getServerInfo(), request.getCounter());

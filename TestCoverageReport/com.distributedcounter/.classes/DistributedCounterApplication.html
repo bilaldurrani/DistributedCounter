@@ -1,0 +1,156 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: DistributedCounterApplication</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">com.distributedcounter</a> ]
+</div>
+
+<h1>Coverage Summary for Class: DistributedCounterApplication (com.distributedcounter)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">DistributedCounterApplication</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    93.3%
+  </span>
+  <span class="absValue">
+    (14/ 15)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">DistributedCounterApplication$$EnhancerBySpringCGLIB$$7b4c0605</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    93.3%
+  </span>
+  <span class="absValue">
+    (14/ 15)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package com.distributedcounter;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import java.net.UnknownHostException;
+<i>4</i>&nbsp;import org.slf4j.Logger;
+<i>5</i>&nbsp;import org.slf4j.LoggerFactory;
+<i>6</i>&nbsp;import org.springframework.boot.SpringApplication;
+<i>7</i>&nbsp;import org.springframework.boot.autoconfigure.SpringBootApplication;
+<i>8</i>&nbsp;import org.springframework.context.ApplicationContext;
+<i>9</i>&nbsp;import org.springframework.context.annotation.ComponentScan;
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;import com.common.ServerInfo;
+<i>12</i>&nbsp;import com.interfaces.IDistributionManager;
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;/**
+<i>15</i>&nbsp; * @author durrab01
+<i>16</i>&nbsp; *
+<i>17</i>&nbsp; */
+<i>18</i>&nbsp;/**
+<i>19</i>&nbsp; * @author durrab01
+<i>20</i>&nbsp; *
+<i>21</i>&nbsp; */
+<i>22</i>&nbsp;@SpringBootApplication
+<i>23</i>&nbsp;@ComponentScan(basePackages = { &quot;com.distributedcounter&quot;, &quot;com.interfaces&quot;, &quot;com.managers&quot;, &quot;com.common&quot;, &quot;com.controllers&quot; }) 
+<b class="fc"><i>24</i>&nbsp;public class DistributedCounterApplication {</b>
+<i>25</i>&nbsp;
+<b class="fc"><i>26</i>&nbsp;	private static final Logger logger = LoggerFactory.getLogger(&quot;DistributedCounterApplication.Main&quot;);</b>
+<i>27</i>&nbsp;
+<i>28</i>&nbsp;	public static void main(String[] args) throws Exception {
+<b class="fc"><i>29</i>&nbsp;		ApplicationContext ctx = SpringApplication.run(DistributedCounterApplication.class, args);</b>
+<i>30</i>&nbsp;
+<b class="fc"><i>31</i>&nbsp;		if (args.length &gt; 1) {</b>
+<i>32</i>&nbsp;			// Not checking that args[1] really is an IP. In worst case the
+<i>33</i>&nbsp;			// Registration logic will do a throw and exception.
+<b class="nc"><i>34</i>&nbsp;			registerWithNode(ctx, args[1]);</b>
+<i>35</i>&nbsp;		}
+<b class="fc"><i>36</i>&nbsp;	}</b>
+<i>37</i>&nbsp;
+<i>38</i>&nbsp;	/**
+<i>39</i>&nbsp;	 * Registers the current node with a remote node. 
+<i>40</i>&nbsp;	 * NOTE: This should be done in a better way (Running when application started event is fired).
+<i>41</i>&nbsp;	 * 
+<i>42</i>&nbsp;	 * @param ctx
+<i>43</i>&nbsp;	 *            ApplicationContext from Spring. Needed to resolve
+<i>44</i>&nbsp;	 *            IDistributionManager.
+<i>45</i>&nbsp;	 * @param node
+<i>46</i>&nbsp;	 *            The remote node being registered with.
+<i>47</i>&nbsp;	 * @throws Exception
+<i>48</i>&nbsp;	 *             Throws an exception if the registration is not successful.
+<i>49</i>&nbsp;	 */
+<i>50</i>&nbsp;	public static void registerWithNode(ApplicationContext ctx, String node) throws UnknownHostException {
+<b class="fc"><i>51</i>&nbsp;		IDistributionManager distributionManager = ctx.getBean(IDistributionManager.class);</b>
+<i>52</i>&nbsp;
+<i>53</i>&nbsp;		try {
+<b class="fc"><i>54</i>&nbsp;			logger.info(&quot;Received arg to register with node: {}&quot;, node);</b>
+<i>55</i>&nbsp;
+<b class="fc"><i>56</i>&nbsp;			ServerInfo serverInfo = new ServerInfo(node);</b>
+<b class="fc"><i>57</i>&nbsp;			distributionManager.register(serverInfo);</b>
+<b class="fc"><i>58</i>&nbsp;		} catch (UnknownHostException e) {</b>
+<b class="fc"><i>59</i>&nbsp;			logger.error(&quot;Unable to Register with node {}. Please enter an up and running node.&quot;, node);</b>
+<b class="fc"><i>60</i>&nbsp;			throw e;</b>
+<b class="fc"><i>61</i>&nbsp;		}</b>
+<b class="fc"><i>62</i>&nbsp;	}</b>
+<i>63</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2017-04-04 12:59</div>
+</div>
+</body>
+</html>

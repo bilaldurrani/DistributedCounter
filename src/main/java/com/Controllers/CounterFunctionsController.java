@@ -32,7 +32,7 @@ public class CounterFunctionsController {
 	 * Increments the local counter by 1 and publishes the counter state to all the nodes.
 	 * @throws UnknownHostException
 	 */
-	// Probably Put is not the best to use, but using PUT as this call will update the increment counter.
+	// Using PUT and not POST as a resource (increment counter) is being Updated
     @PutMapping("/increment")
     void increment() throws UnknownHostException {
         int c = countManager.increment();
@@ -48,7 +48,7 @@ public class CounterFunctionsController {
 	 * Decrements the local counter by 1 and publishes the counter state to all the nodes.
 	 * @throws UnknownHostException
 	 */
- // Probably Put is not the best to use, but using PUT as this call will update the decrement counter.
+    // Using PUT and not POST as a resource (decrement counter) is being Updated
     @PutMapping("/decrement")
     void decrement() throws UnknownHostException {
     	int c = countManager.decrement();
