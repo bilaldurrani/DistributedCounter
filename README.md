@@ -58,3 +58,34 @@ This can be fixed by changing the "/update" endpoint to return back nodes inform
 
 
 **Test Coverage: 97.6% - See folder /TestCoverageReport** (But some tests don't verify 100% each property used)
+
+#Example Usage
+
+Start 3 node cluster (Please make sure the node is fully up before starting the next command - See limitations)
+`java -jar .\target\distributedcounter-1.0.0.jar --server.port=8080`
+`java -jar .\target\distributedcounter-1.0.0.jar --server.port=8081 http://localhost:8080`
+`java -jar .\target\distributedcounter-1.0.0.jar --server.port=8082 http://localhost:8081`
+
+Increment Decrement multiple nodes (using client from https://github.com/bilaldurrani/DistributedCounterClient)
+`java -jar .\target\distributedcounterclient-1.0.0.jar 127.0.0.1 8081 increment`
+`java -jar .\target\distributedcounterclient-1.0.0.jar 127.0.0.1 8082 increment`
+`java -jar .\target\distributedcounterclient-1.0.0.jar 127.0.0.1 8082 increment`
+`java -jar .\target\distributedcounterclient-1.0.0.jar 127.0.0.1 8083 decrement`
+
+GetCount from each node and see it is 
+Counter value is: 3
+`java -jar .\target\distributedcounterclient-1.0.0.jar 127.0.0.1 8081 getcount`
+`java -jar .\target\distributedcounterclient-1.0.0.jar 127.0.0.1 8082 getcount`
+`java -jar .\target\distributedcounterclient-1.0.0.jar 127.0.0.1 8083 getcount`
+
+**Verify data persistance on restart - 1 node must be up - If all nodes go down then data will be lost**
+Shut down node on port 8080 and 8081
+Bring up nodes 8080 and 8081 and register using 8082
+`java -jar .\target\distributedcounter-1.0.0.jar --server.port=8080 http://localhost:8082`
+`java -jar .\target\distributedcounter-1.0.0.jar --server.port=8081 http://localhost:8082`
+
+GetCount from each node and see it is 
+Counter value is: 3
+`java -jar .\target\distributedcounterclient-1.0.0.jar 127.0.0.1 8081 getcount`
+`java -jar .\target\distributedcounterclient-1.0.0.jar 127.0.0.1 8082 getcount`
+`java -jar .\target\distributedcounterclient-1.0.0.jar 127.0.0.1 8083 getcount`
