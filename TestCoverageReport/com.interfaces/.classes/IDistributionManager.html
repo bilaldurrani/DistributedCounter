@@ -1,0 +1,79 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: IDistributionManager</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">com.interfaces</a> ]
+</div>
+
+<h1>Coverage Summary for Class: IDistributionManager (com.interfaces)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+</tr>
+  <tr>
+    <td class="name">IDistributionManager$$EnhancerByMockitoWithCGLIB$$97710deb</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package com.interfaces;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import java.net.UnknownHostException;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;import com.common.Counter;
+<i>6</i>&nbsp;import com.common.ServerInfo;
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;public interface IDistributionManager {
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;	/**
+<i>11</i>&nbsp;	 * Publishes the Counter state to all the nodes.
+<i>12</i>&nbsp;	 * 
+<i>13</i>&nbsp;	 * @param counter				The counter the publish.
+<i>14</i>&nbsp;	 * @throws UnknownHostException	Can throw an unknown host exception if this node&#39;s IP address cannot be resolved.
+<i>15</i>&nbsp;	 */
+<i>16</i>&nbsp;	void publishToAllNodes(Counter counter) throws UnknownHostException;
+<i>17</i>&nbsp;	
+<i>18</i>&nbsp;	/**
+<i>19</i>&nbsp;	 * Registers with a node. As part of registration:
+<i>20</i>&nbsp;	 * 1. Gets the remote&#39;s nodes IP address as qualified by the remote node. This also verified the node is up.
+<i>21</i>&nbsp;	 * 2. Get all the nodes information from the remote node.
+<i>22</i>&nbsp;	 * 3. Updates the remote node states locally.
+<i>23</i>&nbsp;	 * 4. Published it&#39;s state to all the remote nodes. This publish signals the nodes that this node is ready to receive updates.
+<i>24</i>&nbsp;	 * 
+<i>25</i>&nbsp;	 * @param nodeToRegisterWith	The remote node to initiate the registration with.
+<i>26</i>&nbsp;	 * @throws UnknownHostException	Can throw an unknown host exception if this node&#39;s IP address cannot be resolved.
+<i>27</i>&nbsp;	 */
+<i>28</i>&nbsp;	void register(ServerInfo nodeToRegisterWith) throws UnknownHostException;
+<i>29</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2017-04-04 12:59</div>
+</div>
+</body>
+</html>

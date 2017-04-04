@@ -1,0 +1,173 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: DistributionController</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">com.controllers</a> ]
+</div>
+
+<h1>Coverage Summary for Class: DistributionController (com.controllers)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">DistributionController</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (18/ 18)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package com.controllers;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import javax.servlet.http.HttpServletResponse;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;import org.slf4j.Logger;
+<i>6</i>&nbsp;import org.slf4j.LoggerFactory;
+<i>7</i>&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+<i>8</i>&nbsp;import org.springframework.http.HttpStatus;
+<i>9</i>&nbsp;import org.springframework.http.ResponseEntity;
+<i>10</i>&nbsp;import org.springframework.web.bind.annotation.RequestBody;
+<i>11</i>&nbsp;import org.springframework.web.bind.annotation.RequestMapping;
+<i>12</i>&nbsp;import org.springframework.web.bind.annotation.RequestMethod;
+<i>13</i>&nbsp;import org.springframework.web.bind.annotation.RestController;
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;import com.common.NodesInfoResponse;
+<i>16</i>&nbsp;import com.common.ServerInfo;
+<i>17</i>&nbsp;import com.common.UpdateRequest;
+<i>18</i>&nbsp;import com.interfaces.ICountManager;
+<i>19</i>&nbsp;import com.interfaces.INodesManager;
+<i>20</i>&nbsp;import com.interfaces.IServerInfoProvider;
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;@RestController
+<b class="fc"><i>23</i>&nbsp;public class DistributionController {</b>
+<i>24</i>&nbsp;	
+<b class="fc"><i>25</i>&nbsp;	private final Logger logger = LoggerFactory.getLogger(this.getClass());</b>
+<i>26</i>&nbsp;	
+<i>27</i>&nbsp;	@Autowired
+<i>28</i>&nbsp;	IServerInfoProvider serverInfoProvider;
+<i>29</i>&nbsp;	
+<i>30</i>&nbsp;	@Autowired
+<i>31</i>&nbsp;	INodesManager nodesManager;
+<i>32</i>&nbsp;	
+<i>33</i>&nbsp;	@Autowired
+<i>34</i>&nbsp;	ICountManager countManager;
+<i>35</i>&nbsp;	
+<i>36</i>&nbsp;	/**
+<i>37</i>&nbsp;	 * Gets all the nodes info that this node has.
+<i>38</i>&nbsp;	 * @return		NodeInfoResponse which encapsulates all the information about all the nodes in the system.
+<i>39</i>&nbsp;	 * 				This response has their IPs and their Counter states.
+<i>40</i>&nbsp;	 */
+<i>41</i>&nbsp;	@RequestMapping(value = &quot;/nodesinfo&quot;, method = RequestMethod.GET)
+<i>42</i>&nbsp;	NodesInfoResponse getNodesInfo()
+<i>43</i>&nbsp;	{
+<b class="fc"><i>44</i>&nbsp;		NodesInfoResponse response = new NodesInfoResponse();</b>
+<b class="fc"><i>45</i>&nbsp;		response.setNodesInfo(nodesManager.getNodesToCounterMapping());</b>
+<b class="fc"><i>46</i>&nbsp;		response.setOwnCounter(countManager.getCounter());</b>
+<i>47</i>&nbsp;		
+<b class="fc"><i>48</i>&nbsp;		return response;</b>
+<i>49</i>&nbsp;	}
+<i>50</i>&nbsp;	
+<i>51</i>&nbsp;	/**
+<i>52</i>&nbsp;	 * Gets the resolved IP:PORT of this node. This is used by other nodes at registration time to verify the node being registered to exists.
+<i>53</i>&nbsp;	 * Also this is used to get the IP:PORT in a qualified way which this node will understand as well.
+<i>54</i>&nbsp;	 * eg: http://127.0.0.1:8080 is also the same as http://NETWORKADDRESS:8080. Using this call, the registration node will be in sync with this node on how to call it. 
+<i>55</i>&nbsp;	 * @return 		The node info is format http://IP:PORT
+<i>56</i>&nbsp;	 */
+<i>57</i>&nbsp;	@RequestMapping(value = &quot;/nodeconnectioninfo&quot;, method = RequestMethod.GET)
+<i>58</i>&nbsp;	ResponseEntity&lt;ServerInfo&gt; getNodeConnectionInfo(HttpServletResponse response) {
+<i>59</i>&nbsp;		try {
+<b class="fc"><i>60</i>&nbsp;			ServerInfo info = serverInfoProvider.getServerInfo();</b>
+<b class="fc"><i>61</i>&nbsp;			logger.info(&quot;Current server info: {}&quot;, info);</b>
+<i>62</i>&nbsp;			
+<b class="fc"><i>63</i>&nbsp;			return ResponseEntity.ok(info);</b>
+<b class="fc"><i>64</i>&nbsp;		} catch (Exception e) {</b>
+<b class="fc"><i>65</i>&nbsp;			logger.error(&quot;Failed to get connection info: &quot;, e);</b>
+<i>66</i>&nbsp;			
+<b class="fc"><i>67</i>&nbsp;			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);</b>
+<i>68</i>&nbsp;		}
+<i>69</i>&nbsp;	}
+<i>70</i>&nbsp;    
+<i>71</i>&nbsp;	/**
+<i>72</i>&nbsp;	 * Updates the calling node&#39;s counter states with the local state of that counter.
+<i>73</i>&nbsp;	 * @param request	Request from the remote node detailing the node&#39;s counter states.
+<i>74</i>&nbsp;	 * @return			HTTP status to tell whether the state was updated or not (Not being used right now).
+<i>75</i>&nbsp;	 */
+<i>76</i>&nbsp;    @RequestMapping(value = &quot;/update&quot;, method = RequestMethod.PUT)
+<i>77</i>&nbsp;    // Using PUT and not POST as a resource (Cache of nodes information) is being Updated
+<i>78</i>&nbsp;    void update(@RequestBody UpdateRequest request, HttpServletResponse response) {
+<b class="fc"><i>79</i>&nbsp;    	logger.info(&quot;Received update Request: %s&quot;, request);</b>
+<b class="fc"><i>80</i>&nbsp;        boolean isUpdated = nodesManager.updateCounter(request.getServerInfo(), request.getCounter());</b>
+<i>81</i>&nbsp;        
+<b class="fc"><i>82</i>&nbsp;        if(isUpdated) {</b>
+<b class="fc"><i>83</i>&nbsp;        	response.setStatus(HttpServletResponse.SC_CREATED);</b>
+<i>84</i>&nbsp;        }
+<i>85</i>&nbsp;        else {
+<i>86</i>&nbsp;        	// TODO: Check whether this is correct or not.
+<b class="fc"><i>87</i>&nbsp;        	response.setStatus(HttpServletResponse.SC_NOT_MODIFIED);</b>
+<i>88</i>&nbsp;        }
+<b class="fc"><i>89</i>&nbsp;    }    </b>
+<i>90</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2017-04-04 12:59</div>
+</div>
+</body>
+</html>

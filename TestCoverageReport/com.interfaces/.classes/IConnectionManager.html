@@ -1,0 +1,85 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: IConnectionManager</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">com.interfaces</a> ]
+</div>
+
+<h1>Coverage Summary for Class: IConnectionManager (com.interfaces)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+</tr>
+  <tr>
+    <td class="name">IConnectionManager$$EnhancerByMockitoWithCGLIB$$5d827a1</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package com.interfaces;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import com.common.NodesInfoResponse;
+<i>4</i>&nbsp;import com.common.ServerInfo;
+<i>5</i>&nbsp;import com.common.UpdateRequest;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;/**
+<i>8</i>&nbsp; * Interface dealing with node-to-node communication.
+<i>9</i>&nbsp; * @author durrab01
+<i>10</i>&nbsp; *
+<i>11</i>&nbsp; */
+<i>12</i>&nbsp;public interface IConnectionManager {
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;	/**
+<i>15</i>&nbsp;	 * Sync own counter state with a remote node. 
+<i>16</i>&nbsp;	 * @param node		Connection info of the remote node.
+<i>17</i>&nbsp;	 * @param request	Request detailing this node&#39;s states.
+<i>18</i>&nbsp;	 */
+<i>19</i>&nbsp;	public void syncWithNode(ServerInfo node, UpdateRequest request);
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;	/**
+<i>22</i>&nbsp;	 * Gets remote node&#39;s connection info (IP and PORT).
+<i>23</i>&nbsp;	 * @param node		Connection info of the remote node.
+<i>24</i>&nbsp;	 * @return			Remote nodes connection info. (This can be different from the param node).
+<i>25</i>&nbsp;	 */
+<i>26</i>&nbsp;	public ServerInfo getNodeConnectionInfo(ServerInfo node);
+<i>27</i>&nbsp;	
+<i>28</i>&nbsp;	/**
+<i>29</i>&nbsp;	 * Gets all the nodes info from a remote node.
+<i>30</i>&nbsp;	 * @param node		Connection info of the remote node.
+<i>31</i>&nbsp;	 * @return			NodeInfoResponse which encapsulates all the information about all the nodes in the system.
+<i>32</i>&nbsp;	 * 					This response has their IPs and their Counter states.
+<i>33</i>&nbsp;	 */
+<i>34</i>&nbsp;	public NodesInfoResponse getNodesInfo(ServerInfo node);
+<i>35</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2017-04-04 12:59</div>
+</div>
+</body>
+</html>

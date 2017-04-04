@@ -1,0 +1,163 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: DistributionManager</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">com.managers</a> ]
+</div>
+
+<h1>Coverage Summary for Class: DistributionManager (com.managers)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">DistributionManager</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (22/ 22)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package com.managers;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import java.net.UnknownHostException;
+<i>4</i>&nbsp;import java.util.Collection;
+<i>5</i>&nbsp;import org.slf4j.Logger;
+<i>6</i>&nbsp;import org.slf4j.LoggerFactory;
+<i>7</i>&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+<i>8</i>&nbsp;import org.springframework.stereotype.Service;
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;import com.common.Counter;
+<i>11</i>&nbsp;import com.common.NodesInfoResponse;
+<i>12</i>&nbsp;import com.common.ServerInfo;
+<i>13</i>&nbsp;import com.common.UpdateRequest;
+<i>14</i>&nbsp;import com.interfaces.*;
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;@Service
+<b class="fc"><i>17</i>&nbsp;public class DistributionManager implements IDistributionManager {</b>
+<i>18</i>&nbsp;
+<b class="fc"><i>19</i>&nbsp;	private final Logger logger = LoggerFactory.getLogger(this.getClass());</b>
+<i>20</i>&nbsp;	
+<i>21</i>&nbsp;	@Autowired
+<i>22</i>&nbsp;	IServerInfoProvider serverInfoProvider;
+<i>23</i>&nbsp;	
+<i>24</i>&nbsp;	@Autowired
+<i>25</i>&nbsp;	IConnectionManager connectionManager;
+<i>26</i>&nbsp;	
+<i>27</i>&nbsp;	@Autowired
+<i>28</i>&nbsp;	INodesManager nodesManager;
+<i>29</i>&nbsp;	
+<i>30</i>&nbsp;	@Autowired
+<i>31</i>&nbsp;	ICountManager countManager;
+<i>32</i>&nbsp;	
+<i>33</i>&nbsp;	/**
+<i>34</i>&nbsp;	 * 	{@inheritDoc}
+<i>35</i>&nbsp;	 */
+<i>36</i>&nbsp;	@Override
+<i>37</i>&nbsp;	public void publishToAllNodes(Counter counter) throws UnknownHostException {
+<i>38</i>&nbsp;		
+<b class="fc"><i>39</i>&nbsp;		Collection&lt;ServerInfo&gt; nodes = nodesManager.getAllNodes();</b>
+<b class="fc"><i>40</i>&nbsp;		ServerInfo serverInfo = serverInfoProvider.getServerInfo();</b>
+<i>41</i>&nbsp;
+<b class="fc"><i>42</i>&nbsp;		for(ServerInfo node: nodes)</b>
+<i>43</i>&nbsp;		{
+<b class="fc"><i>44</i>&nbsp;			UpdateRequest request = new UpdateRequest(serverInfo, counter);</b>
+<b class="fc"><i>45</i>&nbsp;			connectionManager.syncWithNode(node, request);</b>
+<b class="fc"><i>46</i>&nbsp;		}</b>
+<b class="fc"><i>47</i>&nbsp;	}</b>
+<i>48</i>&nbsp;	
+<i>49</i>&nbsp;	/**
+<i>50</i>&nbsp;	 * 	{@inheritDoc}
+<i>51</i>&nbsp;	 */
+<i>52</i>&nbsp;	@Override
+<i>53</i>&nbsp;	public void register(ServerInfo nodeToRegisterWith) throws UnknownHostException	{
+<i>54</i>&nbsp;		
+<b class="fc"><i>55</i>&nbsp;		ServerInfo nodeAddress = connectionManager.getNodeConnectionInfo(nodeToRegisterWith);</b>
+<b class="fc"><i>56</i>&nbsp;		ServerInfo thisServerInfo = serverInfoProvider.getServerInfo();</b>
+<b class="fc"><i>57</i>&nbsp;		NodesInfoResponse nodesInfo = connectionManager.getNodesInfo(nodeAddress);</b>
+<i>58</i>&nbsp;		
+<b class="fc"><i>59</i>&nbsp;		nodesInfo.getNodesInfo().forEach((node, counter) -&gt; {</b>
+<b class="fc"><i>60</i>&nbsp;			if(node.equals(thisServerInfo)) {</b>
+<i>61</i>&nbsp;				// If the node we are registering with has a node which is the current server itself, then it&#39;s safe to assume the current node is restarting.
+<i>62</i>&nbsp;				// As only a single IP:PORT can exist, we take the value from the remote node and update the local counter to that value.
+<i>63</i>&nbsp;				
+<b class="fc"><i>64</i>&nbsp;				logger.info(&quot;Using Remote Node&#39;s info for &#39;{}&#39;. Updating Counter to {}&quot; , thisServerInfo, counter);</b>
+<b class="fc"><i>65</i>&nbsp;				countManager.setCounter(counter);</b>
+<i>66</i>&nbsp;			}
+<i>67</i>&nbsp;			else {
+<b class="fc"><i>68</i>&nbsp;				logger.info(&quot;Updating local nodes info using: Node: {}, Counter: {}&quot;, node, counter.toString());</b>
+<b class="fc"><i>69</i>&nbsp;				nodesManager.updateCounter(node, counter);</b>
+<i>70</i>&nbsp;			}
+<b class="fc"><i>71</i>&nbsp;		});</b>
+<i>72</i>&nbsp;			
+<i>73</i>&nbsp;		// Adding the remote node&#39;s own counter to the list of counters it has reported. 
+<i>74</i>&nbsp;		// Better design Might be to have the node&#39;s own counter be part of the list of counters. 
+<b class="fc"><i>75</i>&nbsp;		nodesManager.updateCounter(nodeAddress, nodesInfo.getOwnCounter());</b>
+<i>76</i>&nbsp;		
+<i>77</i>&nbsp;		// Now that info of all nodes is update, publish own info to all the nodes.
+<b class="fc"><i>78</i>&nbsp;		this.publishToAllNodes(countManager.getCounter());</b>
+<b class="fc"><i>79</i>&nbsp;	}	</b>
+<i>80</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2017-04-04 12:59</div>
+</div>
+</body>
+</html>

@@ -30,7 +30,7 @@ public class DistributedCounterApplicationTests {
 	@Test
 	public void contextLoads() throws Exception {
 		String[] args = new String[1];
-		args[0] = "TestArg0";
+		args[0] = "--server.port=8082";
 		
 		DistributedCounterApplication.main(args);
 	}
