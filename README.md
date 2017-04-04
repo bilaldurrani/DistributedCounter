@@ -49,4 +49,4 @@ This can be fixed by changing the "/update" endpoint to return back nodes inform
 
 3. If all node's counters count to be larged then int.max, then an overflow exception will be thrown. Can possible use big integer just for calculating the count.
 
-**Test Coverage: 97.6%** (But some tests don't verify 100% each property used)
+**Test Coverage: 97.6% - See folder /TestCoverageReport** (But some tests don't verify 100% each property used)
