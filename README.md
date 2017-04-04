@@ -2,7 +2,7 @@
 Distributed Counter implementation using CRDT (https://en.wikipedia.org/wiki/Conflict-free_replicated_data_type#State-based_CRDTs)
 
 # Startup
-Build: `mvn install`
+Build: `mvn clean install`
 
 Start 1 node on 8080:
 `java -jar .\target\DistributedCounter-0.0.1-SNAPSHOT.jar --server.port=8080`
@@ -45,8 +45,14 @@ This can be fixed by changing the "/update" endpoint to return back nodes inform
 
 # Known issues:
 
-2. If a node goes down, then the remaining nodes will still try to keep sending it their state information. This will decrease performance as a Timout has to happen. This can be fixed using a circtuit breaker and stop sending updates to the offline node. 
+1. If a node goes down, then the remaining nodes will still try to keep sending it their state information. This will decrease performance as a Timout has to happen. This can be fixed using a circtuit breaker and stop sending updates to the offline node. 
 
-3. If all node's counters count to be larged then int.max, then an overflow exception will be thrown. Can possible use big integer just for calculating the count.
+2. If all node's counters count to be larged then int.max, then an overflow exception will be thrown. Can possible use big integer just for calculating the count.
+
+3. The nodes communicate to each other over HTTP calls. This is an anti pattern for CRDT and actually brings scalability down. But as the communication is hiden behind `IConnectionManager`, it would be easier to swith HTTP with something else without a lot of refactoring. Some approaches better would be:
+- Sockets. But management of the sockets would have gotten very complicated.
+- Some gossip protocol which would have shared the node states node by node.
+- Akka distributed data (which would have also handeled the data sharing).
+
 
 **Test Coverage: 97.6% - See folder /TestCoverageReport** (But some tests don't verify 100% each property used)
