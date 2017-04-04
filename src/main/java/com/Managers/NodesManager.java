@@ -61,7 +61,7 @@ public class NodesManager implements INodesManager {
 
 			if(!oldCounter.updateDecrementCounter(counter.getDecrementCounter()))
 			{
-				logger.warn("Update to decrement counter failed (Possibly as old value is greater) for %s. Old Value: %d, New Value: %d", 
+				logger.warn("Update to decrement counter failed (Possibly as old value is greater) for {}. Old Value: {}, New Value: {}", 
 						node.toString(), 
 						oldCounter.getDecrementCounter(), 
 						counter.getDecrementCounter());
